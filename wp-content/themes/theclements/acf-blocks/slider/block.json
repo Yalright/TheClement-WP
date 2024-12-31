@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "name": "acf/slider",
+    "title": "Slider",
+    "description": "Displays a slider with various styles.",
+    "category": "custom-blocks",
+    "icon": "cover-image",
+    "keywords": ["slider"],
+    "mode": "auto",
+    "supports": {
+        "mode": true,
+        "html": false,
+        "align": true
+    },
+    "acf": {
+        "mode": "auto",
+        "renderTemplate": "slider.php"
+    },
+    "editorScript": "file:./slider.js",
+    "editorStyle": "file:./slider-editor.css"
+}

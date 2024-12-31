@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "name": "acf/details",
+    "title": "Details",
+    "description": "Displays a details with various styles.",
+    "category": "custom-blocks",
+    "icon": "cover-image",
+    "keywords": ["details"],
+    "mode": "auto",
+    "supports": {
+        "mode": true,
+        "html": false,
+        "align": true
+    },
+    "acf": {
+        "mode": "auto",
+        "renderTemplate": "details.php"
+    },
+    "editorScript": "file:./details.js",
+    "editorStyle": "file:./details-editor.css"
+}

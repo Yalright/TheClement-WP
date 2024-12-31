@@ -1,0 +1,144 @@
+.site-footer {
+  background-color: #f0e3db;
+  padding: var(--grid-gap);
+  position: relative;
+  min-height: auto;
+  width: auto;
+}
+
+.site-footer * {
+
+  font-family: "adobe-caslon-pro", sans-serif !important;
+  color: #283582 !important;
+}
+
+.newsletter button.btn {
+  font-family: "english-grotesque", serif !important;
+  font-weight: bold;
+  display: block;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-branding {
+  text-align: center;
+  margin-bottom: var(--grid-gap);
+
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  margin-bottom: var(--grid-gap);
+}
+
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.footer-column a {
+  color: var(--color-feature);
+  text-decoration: none;
+  font-family: var(--body-font);
+  font-size: var(--font-size-base);
+
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.newsletter h4 {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.newsletter input {
+  width: -webkit-fill-available;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #283582;
+  background: transparent;
+  margin-top: 10px;
+  max-width: 200px;
+  font-family: inherit;
+  padding-bottom: 8px;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-top: var(--grid-gap);
+}
+
+.footer-social a {
+  width: 24px;
+  height: 24px;
+
+}
+
+/* Legal section at bottom */
+.footer-legal {
+  padding-top: var(--grid-gap);
+  margin-top: var(--grid-gap);
+  border-top: 1px solid rgba(40, 53, 130, 0.2);
+  text-align: center;
+}
+
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.legal-links a {
+  color: var(--color-feature);
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.company-info {
+  color: var(--color-feature);
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+@media screen and (max-width: 767px) {
+  .newsletter input {
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+    margin-top: 60px;
+  }
+}

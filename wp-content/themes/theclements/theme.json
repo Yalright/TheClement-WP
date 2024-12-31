@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 2,
+    "settings": {
+      "color": {
+        "palette": [
+          {
+            "name": "White",
+            "slug": "theme-white",
+            "color": "#ffffff"
+          },
+          {
+            "name": "Black",
+            "slug": "theme-black",
+            "color": "#000000"
+          },
+          {
+            "name": "Teal",
+            "slug": "theme-teal",
+            "color": "#8ed6ec"
+          },
+          {
+            "name": "Blue",
+            "slug": "theme-blue",
+            "color": "#0056a3"
+          }
+        ],
+        "custom": false
+      }
+    }
+  }
+  

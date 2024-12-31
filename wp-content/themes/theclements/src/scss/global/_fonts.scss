@@ -1,0 +1,18 @@
+// Font Families
+$primary-font: "Georgia", "Times New Roman", serif;
+$secondary-font: "Arial", "Helvetica", sans-serif;
+
+$body-font: $secondary-font;
+
+// Font Weights
+$weight-light: 300;
+$weight-normal: normal;
+$weight-medium: 500;
+$weight-semi-bold: 600;
+$weight-bold: bold;
+$weight-black: 900;
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

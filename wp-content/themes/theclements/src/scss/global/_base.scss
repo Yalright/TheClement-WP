@@ -1,0 +1,243 @@
+body,
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: $secondary-font;
+
+  a {
+    font-family: $secondary-font;
+    color:$black;
+    text-decoration: none;
+    &:hover {
+      color:$blue;
+    }
+  }
+
+  &.search-active {
+    overflow: hidden;
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 3;
+    }
+  }
+}
+
+figure {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: calc(100% - 40px);
+  padding: 0;
+  margin: 0 20px;
+
+  @include mq(large-up) {
+    max-width: 1320px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  .container {
+    margin: 0 auto;
+    max-width: 100%;
+
+    @include mq(large-up) {
+      padding: 0 20px;
+      margin: 0 auto;
+      max-width: 1320px;
+    }
+  }
+
+  &--full-width {
+    max-width: 100%;
+  }
+  &-medium {
+    max-width: 1200px;
+  }
+}
+
+.d-none-md-up {
+  display: block;
+
+  @include mq(medium-up) {
+    display: none;
+  }
+}
+
+.d-none-md-down {
+  display: none;
+
+  @include mq(medium-up) {
+    display: block;
+  }
+}
+
+.d-none-lg-up {
+  display: block;
+
+  @include mq(large-up) {
+    display: none;
+  }
+}
+
+.d-none-lg-down {
+  display: none;
+
+  @include mq(large-up) {
+    display: block;
+  }
+}
+
+// Globally set everything to off black
+// * {
+//   color: $black;
+// }
+
+table {
+  width: 100%;
+  text-align: left;
+  border-spacing: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  a {
+    word-break: break-all;
+  }
+
+  @include font-body;
+
+  thead {
+    background: $grey;
+
+    tr {
+      border-bottom: 2px solid $black;
+
+      th {
+        padding: 16px 8px;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $grey;
+
+      td {
+        padding: 16px 8px;
+        vertical-align: top;
+        word-wrap: break-all;
+        overflow-wrap: break-word;
+      }
+
+      &:last-of-type {
+        border-bottom: 2px solid $black;
+      }
+    }
+  }
+}
+
+.scroll-table-container {
+  overflow-x: auto;
+  max-width: calc(100vw - 40px);
+
+  table {
+    min-width: 1000px;
+  }
+}
+
+body {
+  &.mobileMenu-active {
+    overflow: hidden;
+  }
+}
+
+
+.cta-button {
+  @include buttonReset;
+  font-family: $body-font;
+  font-weight: bold;
+  font-size: rem-calc(12);
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: $white;
+  color: $black;
+  border: 1px solid $black;
+  text-decoration: none;
+
+  &-white {
+    background: $white;
+    color: $black;
+    border: 1px solid $black;
+    &:hover {
+      background: $blue;
+      color: $white;
+    }
+  }
+
+  &-theme-blue {
+    background: $blue;
+    color: $white;
+    border: 1px solid $blue;
+    &:hover {
+      background: $white;
+      color: $blue;
+    }
+  }
+
+  &-theme-teal {
+    background: $teal;
+    color: $white;
+    border: 1px solid $teal;
+    &:hover {
+      background: $white;
+      color: $teal;
+    }
+  }
+
+  &-accessibility {
+    display: inline-flex;
+    align-items: center;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url(../../assets/images/accessibility.svg) no-repeat center center;
+      background-size: contain;
+      margin-right: 8px;
+      background-color: $black;
+    }
+  }
+
+  &-donate {
+    display: inline-flex;
+    align-items: center;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url(../../assets/images/donate.svg) no-repeat center center;
+      background-size: contain;
+      margin-right: 8px;
+      background-color: $black;
+    }
+  }
+}

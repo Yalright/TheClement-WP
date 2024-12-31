@@ -1,0 +1,40 @@
+// @import "../../node_modules/bootstrap/scss/bootstrap-grid.scss";
+// @import "../../node_modules/bootstrap/scss/bootstrap-reboot.scss";
+// @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Global base
+// @import "global/_variables";
+// @import "global/_fonts";
+// @import "global/_mixin";
+
+// Global partials
+// @import "global/_animations";
+// @import "global/_spacing";
+// @import "global/_typography-mixins";
+// @import "global/_typography";
+// @import "global/_reset";
+// @import "global/_blocks";
+// @import "global/_base";
+
+// Global elements
+// @import "global/_footer";
+// @import "global/_header";
+
+// Templates
+
+// Blocks
+// @import "acf-blocks/_hero-banner";
+@import "../../acf-blocks/slider/slider";
+@import "../../acf-blocks/details/details";
+
+// Blocks (Flex)
+
+// Partials
+
+// Flats
+// @import "flats/_module-details";
+@import "flats/_module-footer";
+@import "flats/_module-header";
+@import "flats/_module-listing";
+// @import "flats/_module-slider";
+@import "flats/_style";

@@ -1,0 +1,119 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'Doves Type';
+  src: url('/inc/fonts/DovesType/DovesType-Headline.woff2') format('woff2'),
+       url('/inc/fonts/DovesType/DovesType-Headline.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FatFrank';
+  src: url('/inc/fonts/FatFrank/FatFrank-Regular.woff2') format('woff2'),
+       url('/inc/fonts/FatFrank/FatFrank-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base styles */
+body {
+  font-family: var(--body-font, system-ui);
+  font-size: var(--font-size-base, 16px);
+  line-height: var(--line-height-base, 1.5);
+  font-weight: normal;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--color-feature, #333);
+  background-size: auto;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  !importan;!importa;!import;!impor;!impo;!imp;!im;!i;!;!;!import;!importa;!importat;!importa;!import;!importn;!import;!impor;!impo;!imp;!im;!i;!;
+}
+
+.feature-font {
+  font-family: var(--feature-font);
+  font-weight: var(--feature-font-weight);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--header-font, inherit);
+  line-height: var(--line-height-heading, 1.2);
+  margin: 0;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: var(--font-size-h1, 2.5rem);
+}
+
+h2 {
+  font-size: var(--font-size-h2, 2rem);
+}
+
+h3 {
+  font-size: var(--font-size-h3, 2rem);
+}
+
+h4 {
+  font-size: var(--font-size-h4, 2rem);
+}
+
+/* Spacing */
+p {
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: var(--color-feature, #333);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-dark, #666);
+}
+
+/* Main content area */
+.main-content {
+  position: fixed;
+  top: var(--header-height, 0);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  transition: scroll-snap-type 0.3s ease;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Hide scrollbar for Chrome/Safari/Opera */
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Support for older browsers */
+@supports not (scroll-snap-type: y mandatory) {
+  .main-content {
+    scroll-snap-type: none;
+  }
+}

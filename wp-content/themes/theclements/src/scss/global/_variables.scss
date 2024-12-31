@@ -1,0 +1,40 @@
+// Colours
+$white: #ffffff;
+$black: #000000;
+$teal: #8ed6ec;
+$blue: #0056a3;
+$grey: #f5f5f5;
+
+// Colour Palette & Classes
+// Same palette colours defined in functions.php
+$palette-colors: 
+  ("theme-white", #ffffff),
+  ("theme-black", $black),
+  ("theme-teal", $teal),
+  ("theme-blue", $blue);
+
+.guten-block {
+  position: relative;
+  z-index: 1;
+
+  &.has-background,
+  .has-background {
+    @each $color in $palette-colors {
+      &.has-#{nth($color,1)}-background-color {
+        background-color: nth($color, 2);
+      }
+    }
+  }
+
+  &.has-text-color,
+  .has-text-color {
+    @each $color in $palette-colors {
+      &.has-#{nth($color,1)}-text-color {
+        color: nth($color, 2);
+      }
+    }
+  }
+}
+
+$primary-colour: $blue;
+$secondary-colour: $teal;

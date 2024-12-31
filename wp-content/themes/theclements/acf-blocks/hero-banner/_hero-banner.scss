@@ -1,0 +1,81 @@
+.hero-banner {
+    position: relative;
+    background-color: $teal;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        display: none;
+
+        @include mq(large-up) {
+            display: block;
+        }
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        @include mq(large-up) {
+            flex-wrap: nowrap;
+        }
+
+        .content-container {
+            flex: 1 0 100%;
+            padding: 100px 40px 100px 0;
+
+            @include mq(large-up) {
+                flex: 1 0 50%;
+            }
+
+            h1 {
+                font-weight: 500;
+            }
+
+            p {
+                font-size: rem-calc(23);
+                margin-top: 40px;
+            }
+
+            .cta-button {
+                margin-top: 40px;
+                display: inline-block;
+            }
+        }
+
+        .media-area {
+            flex: 1 0 100%;
+
+            @include mq(large-up) {
+                flex: 1 0 50%;
+            }
+
+            &.image {
+                figure {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+
+                    @include mq(large-up) {
+                        display: none;
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+            }
+        }
+    }
+}

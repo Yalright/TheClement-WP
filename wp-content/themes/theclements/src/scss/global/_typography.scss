@@ -1,0 +1,154 @@
+// Base and Global fonts live here
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $primary-font;
+}
+
+// Specific heading styling
+h1 {
+  @include font-h1;
+}
+
+h2 {
+  @include font-h2;
+}
+
+h3 {
+  @include font-h3;
+}
+
+h4 {
+  @include font-h4;
+}
+
+h5 {}
+
+h6 {}
+
+// Body/paragraph styles
+p,
+body,
+li {
+  font-family: $body-font;
+  font-size: rem-calc(16);
+  line-height: rem-calc(26);
+
+  @include mq(large-up) {
+    font-size: rem-calc(18);
+    line-height: rem-calc(29);
+  }
+
+  &.font-bold {
+    font-weight: 600;
+  }
+}
+
+p,
+body,
+li,
+span {
+
+  &.font-bold {
+    font-weight: 600;
+  }
+}
+
+p {
+
+  &.body {
+    @include font-body;
+
+    &--bold {
+      font-weight: bold;
+    }
+  }
+
+  &.body-bold {
+    font-size: rem-calc(16);
+    line-height: rem-calc(26);
+    font-weight: bold;
+    font-family: $primary-font;
+
+    @include mq(large-up) {
+      font-size: rem-calc(18);
+      line-height: rem-calc(29);
+    }
+  }
+
+
+  &.link {
+    font-size: rem-calc(14);
+    line-height: rem-calc(23);
+
+    @include mq(large-up) {
+      font-size: rem-calc(15);
+      line-height: rem-calc(24);
+    }
+  }
+
+  &.text-center {
+    text-align:center;
+  }
+}
+
+ol,
+ul {
+  margin-left: spx(4);
+  margin-bottom: spx(4);
+
+  li {
+    @include font-body;
+    margin-bottom: 0;
+  }
+
+  a {
+    color: $primary-colour;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Highlight Selections - can't be added together has to be handled separate
+p,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+span {
+  &::selection {
+    background: $secondary-colour;
+  }
+
+  &::-moz-selection {
+    background: $secondary-colour;
+  }
+}
+
+// Adding spacing styles for broad blocks
+.guten-block {
+  p {
+    margin-bottom: spx(4);
+  }
+
+  p {
+
+    +h2,
+    +h3 {
+      margin-top: spx(5);
+    }
+
+    +h4 {
+      margin-top: spx(5);
+    }
+  }
+}

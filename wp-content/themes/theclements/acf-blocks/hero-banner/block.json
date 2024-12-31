@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "name": "acf/hero-banner",
+    "title": "Hero Banner",
+    "description": "Displays a hero banner with various styles.",
+    "category": "custom-blocks",
+    "icon": "cover-image",
+    "keywords": ["hero", "banner"],
+    "mode": "auto",
+    "supports": {
+        "mode": true,
+        "html": false,
+        "align": true
+    },
+    "acf": {
+        "mode": "auto",
+        "renderTemplate": "hero-banner.php"
+    },
+    "editorScript": "file:./hero-banner.js",
+    "editorStyle": "file:./hero-banner-editor.css"
+}

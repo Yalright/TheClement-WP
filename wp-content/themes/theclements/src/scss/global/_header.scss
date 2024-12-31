@@ -1,0 +1,234 @@
+header.header {
+    padding: 16px 0;
+
+    .container {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0 24px;
+
+        @include mq(large-up) {
+            flex-wrap: nowrap;
+            gap: 0;
+        }
+
+        .header-logo {
+            flex: 1 0 calc(50% - 24px);
+            justify-content: flex-end;
+            display: flex;
+
+            @include mq(large-up) {
+                justify-content: flex-start;
+            }
+
+            figure {
+                max-width: 190px;
+
+                @include mq(large-up) {
+                    max-width: 100%;
+                }
+            }
+
+            @include mq(large-up) {
+                flex: 0 0 220px;
+            }
+        }
+
+        .header-content {
+            flex: 1 0 calc(50% - 24px);
+            display: flex;
+            align-items: center;
+
+            @include mq(large-up) {
+                flex: 0 0 calc(100% - 220px);
+                flex-wrap: wrap;
+            }
+
+            .header-primary {
+                flex: 1 0 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                justify-content: flex-start;
+                margin-bottom: 0px;
+
+                @include mq(large-up) {
+                    justify-content: flex-end;
+                    margin-bottom: 16px;
+                }
+
+                .header-phone {
+                    font-size: rem-calc(12);
+                    font-weight: bold;
+                    display: none;
+
+                    @include mq(large-up) {
+                        display: block;
+                    }
+
+                    .phone-number {
+                        font-size: rem-calc(18);
+                        margin-right: 16px;
+
+                        a {
+                            text-decoration: none;
+                        }
+                    }
+                }
+
+                .cta-button {
+                    margin-right: 16px;
+
+                    &-donate {
+                        display: none;
+
+                        @include mq(large-up) {
+                            display: block;
+                        }
+                    }
+                }
+
+                .header-socials {
+                    display: none;
+
+                    @include mq(large-up) {
+                        display: flex;
+                    }
+                }
+
+                .menu-button {
+                    @include buttonReset;
+
+                    @include mq(large-up) {
+                        display: none;
+                    }
+
+                    background: none;
+                    border: none;
+                    padding: 0;
+                    width: 24px;
+                    height: 16px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    cursor: pointer;
+
+                    span {
+                        display: block;
+                        width: 100%;
+                        height: 2px;
+                        background-color: black;
+                        border-radius: 2px;
+                        transition: 0.3s ease;
+                        border-radius: 4px;
+                    }
+                }
+
+            }
+
+            .header-secondary {
+                flex: 1 0 100%;
+                justify-content: space-between;
+                align-items: center;
+                padding-left: 32px;
+                display: none;
+
+                @include mq(large-up) {
+                    display: flex;
+                }
+
+                nav.header-nav {
+                    display: flex;
+                    flex: 0 1 auto;
+
+                    ul {
+                        display: flex;
+                        @include ulListReset;
+
+                        li {
+                            font-size: rem-calc(12);
+                            font-weight: 600;
+
+                            a {
+                                color: $black;
+                                padding: 8px;
+                            }
+
+                            +li {
+                                margin-left: 16px;
+                            }
+
+                            ul {
+                                &.submenu {
+                                    @include ulListReset;
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .header-search {
+                    flex: 0 1 auto;
+
+                    .search-button {
+                        @include buttonReset;
+                        font-size: rem-calc(12);
+                        font-weight: 600;
+                        color: $black;
+                        padding: 8px;
+                        display: inline-flex;
+                        align-items: center;
+
+                        &:before {
+                            content: "";
+                            display: inline-block;
+                            width: 16px;
+                            height: 16px;
+                            background: url(../../assets/images/search.svg) no-repeat center center;
+                            background-size: contain;
+                            margin-right: 8px;
+                            background-color: $black;
+                        }
+                    }
+                }
+            }
+        }
+
+        .header-mobile {
+            flex:1 0 100%;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            gap:24px;
+            @include mq(large-up) {
+                display:none;
+            }
+            .width-half {
+                display:flex;
+                flex:1 0 calc(50% - 24px);
+                &:nth-child(1) {
+                    justify-content: flex-end;
+                }
+                &:nth-child(2) {
+                    justify-content: flex-start;
+                }
+            }
+            .header-phone {
+                font-size: rem-calc(12);
+                font-weight: bold;
+                display: inline-block;
+
+                .phone-number {
+                    font-size: rem-calc(18);
+                    margin-right: 16px;
+
+                    a {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+}
