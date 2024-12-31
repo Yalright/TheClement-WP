@@ -60,6 +60,7 @@ $CSS_VARS = [
 </head>
 
 <body <?php body_class(); ?>>
+<div class="main-content">
 
     <?php
 

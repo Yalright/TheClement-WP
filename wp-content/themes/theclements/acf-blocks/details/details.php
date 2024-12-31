@@ -170,7 +170,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
 </div>
 
 <script>
-class RiverLoftsAccordion {
+    class RiverLoftsAccordion {
         constructor(containerId) {
             this.container = document.getElementById(containerId);
             if (!this.container) return;

@@ -128,7 +128,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
     });
   });
 </script>
-
+</div><?php // closing main-content div ?>
 </body>
 
 </html>

@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "name": "acf/listing",
+    "title": "Listing",
+    "description": "Displays a listing with various styles.",
+    "category": "custom-blocks",
+    "icon": "cover-image",
+    "keywords": ["listing"],
+    "mode": "auto",
+    "supports": {
+        "mode": true,
+        "html": false,
+        "align": true
+    },
+    "acf": {
+        "mode": "auto",
+        "renderTemplate": "listing.php"
+    },
+    "editorScript": "file:./listing.js",
+    "editorStyle": "file:./listing-editor.css"
+}
