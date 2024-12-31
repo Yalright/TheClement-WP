@@ -92,28 +92,34 @@
   
   /* Main content area */
   .main-content {
-    position: fixed;
-    top: var(--header-height, 0);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-    transition: scroll-snap-type 0.3s ease;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    // position: fixed;
+    // top: var(--header-height, 0);
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    // overflow-y: auto;
+    // -webkit-overflow-scrolling: touch;
+    // scroll-snap-type: y mandatory;
+    // scroll-behavior: smooth;
+    // transition: scroll-snap-type 0.3s ease;
+    // scrollbar-width: none; /* Firefox */
+    // -ms-overflow-style: none; /* IE/Edge */
   }
   
   /* Hide scrollbar for Chrome/Safari/Opera */
   .main-content::-webkit-scrollbar {
-    display: none;
+    // display: none;
   }
   
   /* Support for older browsers */
   @supports not (scroll-snap-type: y mandatory) {
     .main-content {
-      scroll-snap-type: none;
+      // scroll-snap-type: none;
+    }
+  }
+
+  header.header {
+    + div {
+      margin-top: var(--header-height, 0);
     }
   }

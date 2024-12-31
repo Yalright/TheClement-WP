@@ -60,189 +60,96 @@ $CSS_VARS = [
 </head>
 
 <body <?php body_class(); ?>>
-<div class="main-content">
+    <div class="main-content">
 
-    <?php
+        <?php
 
-    $SITE_CONFIG = get_field('site_config', 'option');
-    $SOCIALS_CONFIG = get_field('socials', 'option');
+        $SITE_CONFIG = get_field('site_config', 'option');
+        $SOCIALS_CONFIG = get_field('socials', 'option');
 
-    ?>
+        ?>
 
-    <header class="header">
-        <button class="header__menu-toggle">
-            <span class="line"></span>
-            <span class="line"></span>
-            <span class="line"></span>
-        </button>
-        <div class="header__brand">
-            <a href="<?php echo site_url(); ?>">
-                <img class="header__brand-logo"
-                    src="<?php echo $SITE_CONFIG['logo']['url']; ?>"
-                    alt="<?php echo $SITE_CONFIG['logo']['alt']; ?>"
-                    <?php if ($SITE_CONFIG['logo']['width']) echo 'width="' . $SITE_CONFIG['logo']['width'] . '"'; ?>
-                    <?php if ($SITE_CONFIG['logo']['height']) echo 'height="' . $SITE_CONFIG['logo']['height'] . '"'; ?>>
-            </a>
-        </div>
+        <header class="header">
+            <button class="header__menu-toggle">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+            <div class="header__brand">
+                <a href="<?php echo site_url(); ?>">
+                    <img class="header__brand-logo"
+                        src="<?php echo $SITE_CONFIG['logo']['url']; ?>"
+                        alt="<?php echo $SITE_CONFIG['logo']['alt']; ?>"
+                        <?php if ($SITE_CONFIG['logo']['width']) echo 'width="' . $SITE_CONFIG['logo']['width'] . '"'; ?>
+                        <?php if ($SITE_CONFIG['logo']['height']) echo 'height="' . $SITE_CONFIG['logo']['height'] . '"'; ?>>
+                </a>
+            </div>
 
-        <?php if ($SITE_CONFIG['enable_booking']): ?>
-            <a href="<?php echo $SITE_CONFIG['booking_link']['url']; ?>"
-                class="header__book-button btn"
-                <?php if ($SITE_CONFIG['booking_link']['target']) echo 'target="' . $SITE_CONFIG['booking_link']['target'] . '"'; ?>>
-                <?php echo $SITE_CONFIG['booking_link']['title']; ?>
-            </a>
-        <?php endif; ?>
+            <?php if ($SITE_CONFIG['enable_booking']): ?>
+                <a href="<?php echo $SITE_CONFIG['booking_link']['url']; ?>"
+                    class="header__book-button btn"
+                    <?php if ($SITE_CONFIG['booking_link']['target']) echo 'target="' . $SITE_CONFIG['booking_link']['target'] . '"'; ?>>
+                    <?php echo $SITE_CONFIG['booking_link']['title']; ?>
+                </a>
+            <?php endif; ?>
 
-        <div class="menu">
-            <div class="menu__nav">
-                <?php
-                // Check if the menu "header-nav" exists
-                if (($locations = get_nav_menu_locations()) && isset($locations['header-nav'])) {
-                    $menu = wp_get_nav_menu_object($locations['header-nav']); // Get the menu object
-                    $menu_items = wp_get_nav_menu_items($menu->term_id); // Get the menu items
+            <div class="menu">
+                <div class="menu__nav">
+                    <?php
+                    // Check if the menu "header-nav" exists
+                    if (($locations = get_nav_menu_locations()) && isset($locations['header-nav'])) {
+                        $menu = wp_get_nav_menu_object($locations['header-nav']); // Get the menu object
+                        $menu_items = wp_get_nav_menu_items($menu->term_id); // Get the menu items
 
-                    // Group menu items by parent
-                    $menu_structure = [];
-                    foreach ($menu_items as $menu_item) {
-                        if ($menu_item->menu_item_parent == 0) {
-                            // Top-level item
-                            $menu_structure[$menu_item->ID] = [
-                                'title' => $menu_item->title,
-                                'url' => $menu_item->url,
-                                'children' => [],
-                            ];
-                        } else {
-                            // Sub-menu item
-                            $menu_structure[$menu_item->menu_item_parent]['children'][] = [
-                                'title' => $menu_item->title,
-                                'url' => $menu_item->url,
-                            ];
+                        // Group menu items by parent
+                        $menu_structure = [];
+                        foreach ($menu_items as $menu_item) {
+                            if ($menu_item->menu_item_parent == 0) {
+                                // Top-level item
+                                $menu_structure[$menu_item->ID] = [
+                                    'title' => $menu_item->title,
+                                    'url' => $menu_item->url,
+                                    'children' => [],
+                                ];
+                            } else {
+                                // Sub-menu item
+                                $menu_structure[$menu_item->menu_item_parent]['children'][] = [
+                                    'title' => $menu_item->title,
+                                    'url' => $menu_item->url,
+                                ];
+                            }
                         }
-                    }
 
-                    // Render the menu structure
-                    foreach ($menu_structure as $section_id => $section): ?>
-                        <div class="menu__section">
-                            <h2 class="menu__section-title" onclick="toggleMenu(this)">
-                                <?php echo esc_html($section['title']); ?>
-                            </h2>
-                            <div class="menu__links-wrapper">
-                                <div class="menu__links">
-                                    <?php foreach ($section['children'] as $link): ?>
-                                        <a href="<?php echo esc_url($link['url']); ?>" class="menu__link">
-                                            <?php echo esc_html($link['title']); ?>
-                                        </a>
-                                    <?php endforeach; ?>
+                        // Render the menu structure
+                        foreach ($menu_structure as $section_id => $section): ?>
+                            <div class="menu__section">
+                                <h2 class="menu__section-title" onclick="toggleMenu(this)">
+                                    <?php echo esc_html($section['title']); ?>
+                                </h2>
+                                <div class="menu__links-wrapper">
+                                    <div class="menu__links">
+                                        <?php foreach ($section['children'] as $link): ?>
+                                            <a href="<?php echo esc_url($link['url']); ?>" class="menu__link">
+                                                <?php echo esc_html($link['title']); ?>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                <?php endforeach;
-                }
-                ?>
-            </div>
+                    <?php endforeach;
+                    }
+                    ?>
+                </div>
 
 
-            <div class="menu__footer">
-                <div class="menu__footer-social">
-                    <?php foreach ($SOCIALS_CONFIG as $social): ?>
-                        <a class="menu__footer-link" aria-label="<?php echo $social['icon']['alt']; ?>" href="<?php echo $social['link']['url']; ?>">
-                            <img class="menu__footer-social-icon" src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
-                        </a>
-                    <?php endforeach; ?>
+                <div class="menu__footer">
+                    <div class="menu__footer-social">
+                        <?php foreach ($SOCIALS_CONFIG as $social): ?>
+                            <a class="menu__footer-link" aria-label="<?php echo $social['icon']['alt']; ?>" href="<?php echo $social['link']['url']; ?>">
+                                <img class="menu__footer-social-icon" src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
-
-    <script>
-        // Menu elements
-        const toggleButton = document.querySelector('.header__menu-toggle');
-        const menu = document.querySelector('.menu');
-
-        // Function to close menu
-        function closeMenu() {
-            menu.classList.remove('menu--active');
-            toggleButton.classList.remove('state-x');
-            setTimeout(() => toggleButton.classList.remove('state-square'), 300);
-        }
-
-        // Handle the main menu toggle
-        toggleButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-
-            const isMenuActive = menu.classList.contains('menu--active');
-
-            if (isMenuActive) {
-                closeMenu();
-            } else {
-                this.classList.add('state-square');
-                setTimeout(() => this.classList.add('state-x'), 300);
-                menu.classList.add('menu--active');
-            }
-        });
-
-        // Prevent clicks inside the menu from closing it
-        menu.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (menu.classList.contains('menu--active')) {
-                closeMenu();
-            }
-        });
-
-        // Close menu on ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && menu.classList.contains('menu--active')) {
-                closeMenu();
-            }
-        });
-
-        // Accordion toggle function
-        function toggleMenu(element) {
-            const allSections = document.querySelectorAll('.menu__section');
-            const parentSection = element.parentElement;
-            const linksContainer = parentSection.querySelector('.menu__links');
-            const links = parentSection.querySelectorAll('.menu__link');
-
-            // Close all other sections
-            allSections.forEach(section => {
-                if (section !== parentSection) {
-                    section.classList.remove('active');
-                    section.querySelector('.menu__links').style.maxHeight = null;
-                }
-            });
-
-            // Toggle current section
-            if (parentSection.classList.contains('active')) {
-                parentSection.classList.remove('active');
-                linksContainer.style.maxHeight = null;
-            } else {
-                parentSection.classList.add('active');
-                linksContainer.style.maxHeight = linksContainer.scrollHeight + 'px';
-
-                // Staggered animations for links
-                links.forEach((link, index) => {
-                    link.style.setProperty('--fade-delay', `${index * 0.1}s`);
-                });
-            }
-        }
-
-        // Automatically open the first menu section on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const firstSection = document.querySelector('.menu__section');
-            if (firstSection) {
-                firstSection.classList.add('active');
-                const linksContainer = firstSection.querySelector('.menu__links');
-                linksContainer.style.maxHeight = linksContainer.scrollHeight + 'px';
-                const links = firstSection.querySelectorAll('.menu__link');
-
-                // Apply staggered animations for links
-                links.forEach((link, index) => {
-                    link.style.setProperty('--fade-delay', `${index * 0.1}s`);
-                });
-            }
-        });
-    </script>
+        </header>

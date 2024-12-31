@@ -110,25 +110,26 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
 <?php wp_footer(); ?>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const mainContent = document.querySelector('.main-content');
-    const modules = document.querySelectorAll('.clement-module');
-    const footer = document.querySelector('.site-footer');
-    let lastModule = modules[modules.length - 1];
+  // document.addEventListener('DOMContentLoaded', function() {
+  //   const mainContent = document.querySelector('.main-content');
+  //   const modules = document.querySelectorAll('.clement-module');
+  //   const footer = document.querySelector('.site-footer');
+  //   let lastModule = modules[modules.length - 1];
 
-    mainContent.addEventListener('scroll', function() {
-      const lastModuleRect = lastModule.getBoundingClientRect();
-      const footerRect = footer.getBoundingClientRect();
+  //   mainContent.addEventListener('scroll', function() {
+  //     const lastModuleRect = lastModule.getBoundingClientRect();
+  //     const footerRect = footer.getBoundingClientRect();
 
-      if (lastModuleRect.bottom <= window.innerHeight + 100) { // 100px threshold
-        mainContent.style.scrollSnapType = 'none'; // Disable snap
-      } else {
-        mainContent.style.scrollSnapType = 'y mandatory'; // Re-enable snap
-      }
-    });
-  });
+  //     if (lastModuleRect.bottom <= window.innerHeight + 100) { // 100px threshold
+  //       mainContent.style.scrollSnapType = 'none'; // Disable snap
+  //     } else {
+  //       mainContent.style.scrollSnapType = 'y mandatory'; // Re-enable snap
+  //     }
+  //   });
+  // });
 </script>
-</div><?php // closing main-content div ?>
+</div><?php // closing main-content div 
+      ?>
 </body>
 
 </html>
