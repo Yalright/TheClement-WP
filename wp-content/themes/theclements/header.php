@@ -1,29 +1,27 @@
 <?php
-// CSS Variables
-$CSS_VARS = [
-    'color-feature' => '#283582',
-    'color-background' => '#f0e3db',
-    'color-dark' => '#1a1a1a',
-    'color-module-footer' => '#edede1',
-    'header-height' => '80px',
-    'grid-gap' => '1.5rem',
-    'transition-timing' => '0.3s ease-in-out',
-    'body-font' => '"adobe-caslon-pro", sans-serif',
-    'header-font' => '"english-grotesque", serif',
-    'font-size-base' => '17px',
-    'line-height-base' => '1.6',
-    'font-size-h1' => '2.5rem',
-    'font-size-h2' => '2.25rem',
-    'font-size-h3' => '2rem',
-    'font-size-h4' => '1.5rem',
-    'line-height-heading' => '1.3',
-    'footer-height' => '100px',
-    'line-thickness' => '1px',
-    'color-border' => '#1a1a1a',
-    'details-max-width' => '900px',
-    'feature-font' => 'Doves Type',
-    'feature-font-weight' => 'bold'
-];
+$CSS_VARS_FIELDS = get_field('css_vars', 'option'); // Retrieve the string
+if (!empty($CSS_VARS_FIELDS)) {
+    // Convert the string to an associative array
+    $CSS_VARS = [];
+
+    // Remove whitespace and split by lines
+    $lines = explode("\n", trim($CSS_VARS_FIELDS));
+
+    foreach ($lines as $line) {
+        // Match key-value pairs using regex
+        if (preg_match("/'([^']+)'\\s*=>\\s*'([^']+)'/", $line, $matches)) {
+            $key = $matches[1];
+            $value = $matches[2];
+            $CSS_VARS[$key] = $value;
+        }
+    }
+
+    // Use the resulting array
+    // echo '<pre>';
+    // print_r($CSS_VARS);
+    // echo '</pre>';
+}
+
 ?>
 
 <!DOCTYPE html>

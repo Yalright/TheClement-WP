@@ -3,6 +3,45 @@
     "title": "Site Settings - Single",
     "fields": [
         {
+            "key": "field_677416f4212ef",
+            "label": "Site Settings",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_677416ff212f0",
+            "label": "CSS VARS",
+            "name": "css_vars",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 30,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
             "key": "field_67728bacab966",
             "label": "Header",
             "name": "",
@@ -421,5 +460,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1735579052
+    "modified": 1735661772
 }
