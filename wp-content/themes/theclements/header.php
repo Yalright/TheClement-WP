@@ -1,5 +1,6 @@
 <?php
 $CSS_VARS_FIELDS = get_field('css_vars', 'option'); // Retrieve the string
+$ADDITIONAL_CSS = get_field('additional_css', 'option'); // Retrieve the string
 if (!empty($CSS_VARS_FIELDS)) {
     // Convert the string to an associative array
     $CSS_VARS = [];
@@ -21,7 +22,6 @@ if (!empty($CSS_VARS_FIELDS)) {
     // print_r($CSS_VARS);
     // echo '</pre>';
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +54,8 @@ if (!empty($CSS_VARS_FIELDS)) {
             }
             ?>
         }
+
+        <?php echo isset($ADDITIONAL_CSS) ? $ADDITIONAL_CSS : ''; ?>
     </style>
 </head>
 
@@ -93,50 +95,41 @@ if (!empty($CSS_VARS_FIELDS)) {
 
             <div class="menu">
                 <div class="menu__nav">
+
                     <?php
-                    // Check if the menu "header-nav" exists
-                    if (($locations = get_nav_menu_locations()) && isset($locations['header-nav'])) {
-                        $menu = wp_get_nav_menu_object($locations['header-nav']); // Get the menu object
-                        $menu_items = wp_get_nav_menu_items($menu->term_id); // Get the menu items
+                    // Fetch all menus
+                    $menus = get_all_header_nav_menus();
 
-                        // Group menu items by parent
-                        $menu_structure = [];
-                        foreach ($menu_items as $menu_item) {
-                            if ($menu_item->menu_item_parent == 0) {
-                                // Top-level item
-                                $menu_structure[$menu_item->ID] = [
-                                    'title' => $menu_item->title,
-                                    'url' => $menu_item->url,
-                                    'children' => [],
-                                ];
-                            } else {
-                                // Sub-menu item
-                                $menu_structure[$menu_item->menu_item_parent]['children'][] = [
-                                    'title' => $menu_item->title,
-                                    'url' => $menu_item->url,
-                                ];
+                    // Render the menus
+                    if (!empty($menus)) {
+                        foreach ($menus as $index => $menu_data) {
+                            $site_name = $menu_data['site_name'];
+                            $menu_structure = $menu_data['menu_structure'];
+
+                            // Set "active" class for the current site
+                            $section_class = ($index === 0) ? 'menu__section active' : 'menu__section';
+
+                            echo '<div class="' . esc_attr($section_class) . '">';
+                            echo '<h2 class="menu__section-title" onclick="toggleMenu(this)">' . esc_html($site_name) . '</h2>';
+                            echo '<div class="menu__links-wrapper">';
+                            echo '<div class="menu__links">';
+
+                            foreach ($menu_structure as $section) {
+                                echo '<a href="' . esc_url($section['url']) . '" class="menu__link">' . esc_html($section['title']) . '</a>';
+                                if (!empty($section['children'])) {
+                                    foreach ($section['children'] as $child) {
+                                        echo '<a href="' . esc_url($child['url']) . '" class="menu__link">' . esc_html($child['title']) . '</a>';
+                                    }
+                                }
                             }
-                        }
 
-                        // Render the menu structure
-                        foreach ($menu_structure as $section_id => $section): ?>
-                            <div class="menu__section">
-                                <h2 class="menu__section-title" onclick="toggleMenu(this)">
-                                    <?php echo esc_html($section['title']); ?>
-                                </h2>
-                                <div class="menu__links-wrapper">
-                                    <div class="menu__links">
-                                        <?php foreach ($section['children'] as $link): ?>
-                                            <a href="<?php echo esc_url($link['url']); ?>" class="menu__link">
-                                                <?php echo esc_html($link['title']); ?>
-                                            </a>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-                    <?php endforeach;
+                            echo '</div>'; // End .menu__links
+                            echo '</div>'; // End .menu__links-wrapper
+                            echo '</div>'; // End .menu__section
+                        }
                     }
                     ?>
+
                 </div>
 
 

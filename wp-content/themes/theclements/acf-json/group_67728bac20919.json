@@ -42,6 +42,27 @@
             "new_lines": ""
         },
         {
+            "key": "field_67741d574fad1",
+            "label": "Additional CSS",
+            "name": "additional_css",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 30,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
             "key": "field_67728bacab966",
             "label": "Header",
             "name": "",
@@ -460,5 +481,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1735661772
+    "modified": 1735662945
 }

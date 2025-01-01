@@ -8,8 +8,8 @@
   
   @font-face {
     font-family: 'Doves Type';
-    src: url('/inc/fonts/DovesType/DovesType-Headline.woff2') format('woff2'),
-         url('/inc/fonts/DovesType/DovesType-Headline.woff') format('woff');
+    src: url('../fonts/DovesType/DovesType-Headline.woff2') format('woff2'),
+         url('../fonts/DovesType/DovesType-Headline.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -17,8 +17,8 @@
   
   @font-face {
     font-family: 'FatFrank';
-    src: url('/inc/fonts/FatFrank/FatFrank-Regular.woff2') format('woff2'),
-         url('/inc/fonts/FatFrank/FatFrank-Regular.woff') format('woff');
+    src: url('../fonts/FatFrank/FatFrank-Regular.woff2') format('woff2'),
+         url('../fonts/FatFrank/FatFrank-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
