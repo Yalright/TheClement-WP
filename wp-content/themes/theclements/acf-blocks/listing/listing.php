@@ -22,7 +22,7 @@ $specs              = get_field('specs');
 ?>
 
 <div class="guten-block livingstone-module">
-    <?php if (isset($variable_name) && !empty($variable_name)): ?>
+    <?php if (!empty($variable_name) && !empty($variable_name)): ?>
         <div class="livingstone-name">
             <h3 style="color:<?php echo $variable_color; ?>"><?php echo $variable_name; ?></h3>
         </div>
@@ -47,8 +47,8 @@ $specs              = get_field('specs');
 
     <div class="livingstone-footer">
         <div class="livingstone-foot-content">
-            <p><?php echo isset($footer_text) ? $footer_text : ''; ?></p>
-            <?php if (isset($footer_links) && !empty($footer_links)): ?>
+            <p><?php echo !empty($footer_text) ? $footer_text : ''; ?></p>
+            <?php if (!empty($footer_links) && !empty($footer_links)): ?>
                 <div class="livingstone-links">
                     <?php foreach ($footer_links as $link): ?>
                         <a href="<?php echo $link['link']['url']; ?>" class="btn livingstone-link">

@@ -34,29 +34,26 @@ if (!empty($CSS_VARS_FIELDS)) {
     <meta name="description" content="<?php echo get_bloginfo('description'); ?>">
     <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon.png">
     <link href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon.png" rel="apple-touch-icon" />
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,200;0,300;0,400;0,600;0,700;1,400&family=Roboto:wght@200;300;400;600;700&display=swap" rel="preload" as="style" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,200;0,300;0,400;0,600;0,700;1,400&family=Roboto:wght@200;300;400;600;700&display=swap" rel="stylesheet" crossorigin="anonymous"> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <link rel="stylesheet" href="https://use.typekit.net/brd3dwf.css">
 
     <title><?php wp_title(''); ?></title>
-    <?php if (!empty(get_field('analytics_code', 'option'))) : ?><?php the_field('analytics_code', 'option'); ?><?php endif; ?>
     <?php if (!empty(get_field('header_scripts', 'option'))) : ?><?php the_field('header_scripts', 'option'); ?><?php endif; ?>
     <?php wp_head(); ?>
-    <style>
-        :root {
-            <?php
-            foreach ($CSS_VARS as $key => $value) {
-                echo "--{$key}: {$value};\n";
-            }
-            ?>
-        }
 
-        <?php echo isset($ADDITIONAL_CSS) ? $ADDITIONAL_CSS : ''; ?>
-    </style>
+    <?php if (!empty($CSS_VARS_FIELDS) || !empty($ADDITIONAL_CSS)) { ?>
+        <style>
+            <?php if (!empty($CSS_VARS_FIELDS)) {
+                echo ":root {";
+                foreach ($CSS_VARS as $key => $value) {
+                    echo "--{$key}: {$value};\n";
+                }
+                echo "}";
+            }
+            if (!empty($ADDITIONAL_CSS)) {
+                echo $ADDITIONAL_CSS;
+            } ?>
+        </style>
+    <?php } ?>
 </head>
 
 <body <?php body_class(); ?>>
@@ -75,17 +72,20 @@ if (!empty($CSS_VARS_FIELDS)) {
                 <span class="line"></span>
                 <span class="line"></span>
             </button>
-            <div class="header__brand">
-                <a href="<?php echo site_url(); ?>">
-                    <img class="header__brand-logo"
-                        src="<?php echo $SITE_CONFIG['logo']['url']; ?>"
-                        alt="<?php echo $SITE_CONFIG['logo']['alt']; ?>"
-                        <?php if ($SITE_CONFIG['logo']['width']) echo 'width="' . $SITE_CONFIG['logo']['width'] . '"'; ?>
-                        <?php if ($SITE_CONFIG['logo']['height']) echo 'height="' . $SITE_CONFIG['logo']['height'] . '"'; ?>>
-                </a>
-            </div>
 
-            <?php if ($SITE_CONFIG['enable_booking']): ?>
+            <?php if (!empty($SITE_CONFIG['logo'])): ?>
+                <div class="header__brand">
+                    <a href="<?php echo site_url(); ?>">
+                        <img class="header__brand-logo"
+                            src="<?php echo $SITE_CONFIG['logo']['url']; ?>"
+                            alt="<?php echo $SITE_CONFIG['logo']['alt']; ?>"
+                            <?php if ($SITE_CONFIG['logo']['width']) echo 'width="' . $SITE_CONFIG['logo']['width'] . '"'; ?>
+                            <?php if ($SITE_CONFIG['logo']['height']) echo 'height="' . $SITE_CONFIG['logo']['height'] . '"'; ?>>
+                    </a>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($SITE_CONFIG['enable_booking']) && !empty($SITE_CONFIG['booking_link'])): ?>
                 <a href="<?php echo $SITE_CONFIG['booking_link']['url']; ?>"
                     class="header__book-button btn"
                     <?php if ($SITE_CONFIG['booking_link']['target']) echo 'target="' . $SITE_CONFIG['booking_link']['target'] . '"'; ?>>
@@ -97,10 +97,7 @@ if (!empty($CSS_VARS_FIELDS)) {
                 <div class="menu__nav">
 
                     <?php
-                    // Fetch all menus
                     $menus = get_all_header_nav_menus();
-
-                    // Render the menus
                     if (!empty($menus)) {
                         foreach ($menus as $index => $menu_data) {
                             $site_name = $menu_data['site_name'];
@@ -134,13 +131,15 @@ if (!empty($CSS_VARS_FIELDS)) {
 
 
                 <div class="menu__footer">
-                    <div class="menu__footer-social">
-                        <?php foreach ($SOCIALS_CONFIG as $social): ?>
-                            <a class="menu__footer-link" aria-label="<?php echo $social['icon']['alt']; ?>" href="<?php echo $social['link']['url']; ?>">
-                                <img class="menu__footer-social-icon" src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php if (!empty($SOCIALS_CONFIG)): ?>
+                        <div class="menu__footer-social">
+                            <?php foreach ($SOCIALS_CONFIG as $social): ?>
+                                <a class="menu__footer-link" aria-label="<?php echo $social['icon']['alt']; ?>" href="<?php echo $social['link']['url']; ?>">
+                                    <img class="menu__footer-social-icon" src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </header>

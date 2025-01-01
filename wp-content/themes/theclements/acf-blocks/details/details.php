@@ -47,10 +47,10 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
 
 
     <?php if (
-        isset($title) || !empty($specs) || isset($description) || !empty($action_buttons)
+        !empty($title) || !empty($specs) || !empty($description) || !empty($action_buttons)
     ): ?>
         <div class="property-details">
-            <?php if (isset($title)): ?>
+            <?php if (!empty($title)): ?>
                 <h1 class="property-title"><?php echo htmlspecialchars($title); ?></h1>
             <?php endif; ?>
 
@@ -66,7 +66,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                 </div>
             <?php endif; ?>
 
-            <?php if (isset($description)): ?>
+            <?php if (!empty($description)): ?>
                 <p class="property-description">
                     <?php echo htmlspecialchars($description); ?>
                 </p>
@@ -79,13 +79,15 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                     margin-top: 0px;
                 }
             </style>
-            <div class="footer-social details-links">
-                <?php foreach ($SOCIALS_CONFIG as $social): ?>
-                    <a href="<?php echo $social['link']['url']; ?>">
-                        <img src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
-                    </a>
-                <?php endforeach; ?>
-            </div>
+            <?php if (!empty($SOCIALS_CONFIG)): ?>
+                <div class="footer-social details-links">
+                    <?php foreach ($SOCIALS_CONFIG as $social): ?>
+                        <a href="<?php echo $social['link']['url']; ?>">
+                            <img src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
             <!-- <?php if (!empty($action_buttons)): ?>
                     <div class="property-actions">
@@ -99,7 +101,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
         </div>
     <?php endif; ?>
 
-    <?php if (isset($rich_content)): ?>
+    <?php if (!empty($rich_content)): ?>
         <div class="rich-content">
             <?php echo $rich_content; ?>
         </div>
@@ -149,9 +151,9 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
         </div>
     <?php endif; ?>
 
-    <?php if (isset($config['related_properties']) && !empty($config['related_properties']['items'])): ?>
+    <?php if (!empty($config['related_properties']) && !empty($config['related_properties']['items'])): ?>
         <div class="related-properties">
-            <?php if (isset($config['related_properties']['title'])): ?>
+            <?php if (!empty($config['related_properties']['title'])): ?>
                 <h4><?php echo htmlspecialchars($config['related_properties']['title']); ?></h4>
             <?php endif; ?>
             <div class="property-carousel">

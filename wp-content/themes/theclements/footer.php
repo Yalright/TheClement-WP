@@ -5,11 +5,13 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
 <footer class="site-footer">
   <div class="footer-content">
     <!-- Logo -->
-    <div class="footer-branding">
-      <img class="header__brand-logo"
-        src="<?php echo $FOOTER_CONFIG['logo']['url']; ?>"
-        alt="<?php echo $FOOTER_CONFIG['logo']['alt']; ?>">
-    </div>
+    <?php if (!empty($FOOTER_CONFIG['logo'])): ?>
+      <div class="footer-branding">
+        <img class="header__brand-logo"
+          src="<?php echo $FOOTER_CONFIG['logo']['url']; ?>"
+          alt="<?php echo $FOOTER_CONFIG['logo']['alt']; ?>">
+      </div>
+    <?php endif; ?>
 
     <!-- Main footer content -->
     <div class="footer-main">
@@ -64,7 +66,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
           }
           ?>
 
-          <?php if ($FOOTER_CONFIG['enable_newsletter']): ?>
+          <?php if (!empty($FOOTER_CONFIG['enable_newsletter']) && !empty($FOOTER_CONFIG['newsletter_title']) && !empty($FOOTER_CONFIG['newsletter_placeholder']) && !empty($FOOTER_CONFIG['newsletter_button_text'])): ?>
             <div class="newsletter">
               <h4><?php echo $FOOTER_CONFIG['newsletter_title']; ?></h4>
               <input type="email" placeholder="<?php echo $FOOTER_CONFIG['newsletter_placeholder']; ?>">
@@ -72,14 +74,15 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
             </div>
           <?php endif; ?>
         </div>
-
-        <div class="footer-social">
-          <?php foreach ($SOCIALS_CONFIG as $social): ?>
-            <a href="<?php echo $social['link']['url']; ?>">
-              <img src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
-            </a>
-          <?php endforeach; ?>
-        </div>
+        <?php if (!empty($SOCIALS_CONFIG)): ?>
+          <div class="footer-social">
+            <?php foreach ($SOCIALS_CONFIG as $social): ?>
+              <a href="<?php echo $social['link']['url']; ?>">
+                <img src="<?php echo $social['icon']['url']; ?>" alt="<?php echo $social['icon']['alt']; ?>">
+              </a>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -100,9 +103,11 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
         }
         ?>
       </div>
-      <div class="company-info">
-        <?php echo $FOOTER_CONFIG['copyright_text']; ?> &copy; <?php echo date('Y'); ?>
-      </div>
+      <?php if (!empty($FOOTER_CONFIG['copyright_text'])): ?>
+        <div class="company-info">
+          <?php echo $FOOTER_CONFIG['copyright_text']; ?> &copy; <?php echo date('Y'); ?>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </footer>

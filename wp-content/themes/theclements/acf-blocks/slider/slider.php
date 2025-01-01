@@ -20,7 +20,7 @@ $footer_links = get_field('footer_links');
 
 
 <div class="guten-block clement-module">
-    <?php if (isset($variable_logo) && !empty($variable_logo)): ?>
+    <?php if (!empty($variable_logo) && !empty($variable_logo)): ?>
         <div class="module-logo">
             <img src="<?php echo $variable_logo['url']; ?>"
                 data-src="<?php echo $variable_logo['url']; ?>"
@@ -48,7 +48,7 @@ $footer_links = get_field('footer_links');
     <div class="footer-bar">
         <div class="slide-foot-content">
             <p><?php echo isset($footer_text) ? $footer_text : ''; ?></p>
-            <?php if (isset($footer_links) && !empty($footer_links)): ?>
+            <?php if (!empty($footer_links) && !empty($footer_links)): ?>
                 <div class="footer-links">
                     <?php foreach ($footer_links as $link): ?>
                         <a href="<?php echo $link['link']['url']; ?>" class="btn footer-link">
