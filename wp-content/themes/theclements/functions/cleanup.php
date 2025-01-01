@@ -70,15 +70,15 @@ add_filter( 'style_loader_src', 'b4st_remove_script_version', 15, 1 );*/
 // COMMENTS
 //
 
-function md_remove_menus()
-{
+// function md_remove_menus()
+// {
 
-  $current_user = wp_get_current_user();
-  if ($current_user->user_login !== "mikedistras") {
+//   $current_user = wp_get_current_user();
+//   if ($current_user->user_login !== "mikedistras") {
     // remove_menu_page('index.php');                  //Dashboard
     // remove_menu_page('edit.php');                   //Posts
     // remove_menu_page('upload.php');                 //Media
-    remove_menu_page('edit-comments.php');          //Comments
+    // remove_menu_page('edit-comments.php');          //Comments
     // remove_menu_page('themes.php');                 //Appearance
     // remove_menu_page('plugins.php');                //Plugins
     // remove_menu_page('users.php');                  //Users
@@ -95,6 +95,6 @@ function md_remove_menus()
     // remove_submenu_page('themes.php', 'themes.php');
     // remove_submenu_page('themes.php', 'theme-editor.php');
     // remove_submenu_page('themes.php', 'customize.php?return=' . urlencode($_SERVER['SCRIPT_NAME']));
-  }
-}
-add_action('admin_menu', 'md_remove_menus', 999);
+  // }
+// }
+// add_action('admin_menu', 'md_remove_menus', 999);

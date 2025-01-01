@@ -1,10 +1,5 @@
 <?php get_header(); ?>
 
-<div id="content">
+<?php the_content(); ?>
 
-  <div class="container">
-    <?php the_content(); ?>
-  </div>
-
-</div>
 <?php get_footer(); ?>

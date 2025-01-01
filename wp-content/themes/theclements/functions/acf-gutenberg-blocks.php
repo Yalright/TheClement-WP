@@ -34,12 +34,7 @@ function my_acf_init()
     //     'html'       => false,  // Prevent HTML editing
     //     'align'      => true,   // Optional: alignment support
     //   ),
-    // ));
-
-
-
-
-    
+    // ));    
   }
 }
 
