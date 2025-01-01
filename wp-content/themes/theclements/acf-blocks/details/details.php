@@ -24,7 +24,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
 
 ?>
 
-<div class="river-lofts" id="river-lofts-<?php echo sanitize_title($title); ?>">
+<div class="guten-block river-lofts" id="river-lofts-<?php echo sanitize_title($title); ?>">
     <?php if (!empty($gallery_images)): ?>
         <div class="main-gallery">
             <div class="gallery-container slick-slider">
