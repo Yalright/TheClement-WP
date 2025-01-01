@@ -1,49 +1,26 @@
 
-jQuery(document).ready(function($) {
-    $('.gallery-container').not('.slick-initialized').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        dots: true,
-        arrows: false,
-        fade: true,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        infinite: true,
-        adaptiveHeight: false,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    arrows: false,
-                    dots: true
-                }
-            }
-        ]
-    });
-});
+function adjustSlideshowHeights() {
+    // Select all slideshow container elements
+    const slideshowContainers = document.querySelectorAll('.slideshow-container, .livingstone-slideshow');
 
-jQuery(document).ready(function($) {
-    $('.livingstone-slideshow').not('.slick-initialized').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        dots: true,
-        arrows: false,
-        fade: true,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        infinite: true,
-        adaptiveHeight: false,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    arrows: false,
-                    dots: true
-                }
-            }
-        ]
+    slideshowContainers.forEach(slideshow => {
+        // Find the next sibling with the class 'footer-bar'
+        const footerBar = slideshow.nextElementSibling;
+        if (footerBar && (footerBar.classList.contains('footer-bar') || footerBar.classList.contains('livingstone-footer'))) {
+            // Get the height of the footer-bar
+            const footerHeight = footerBar.offsetHeight;
+
+            // Set the max height using calc and the CSS variable --header-height
+            slideshow.style.maxHeight = `calc(100vh - ${footerHeight}px - var(--header-height))`;
+        }
     });
-});
+}
+
+// Run the function on initial load
+adjustSlideshowHeights();
+
+// Run the function again when the window is resized
+window.addEventListener('resize', adjustSlideshowHeights);
  // Menu elements
  const toggleButton = document.querySelector('.header__menu-toggle');
  const menu = document.querySelector('.menu');
@@ -134,6 +111,85 @@ jQuery(document).ready(function($) {
          });
      }
  });
+jQuery(document).ready(function($) {
+    // Initialize gallery container sliders
+    $('.gallery-container').not('.slick-initialized').each(function() {
+        const $slider = $(this);
+        const slideCount = $slider.children().length;
+        
+        $slider.slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: slideCount > 1,
+            arrows: false,
+            fade: true,
+            autoplay: slideCount > 1,
+            autoplaySpeed: 3000,
+            infinite: slideCount > 1,
+            adaptiveHeight: false,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        dots: slideCount > 1
+                    }
+                }
+            ]
+        });
+    });
+
+    // Initialize Livingstone slideshow
+    $('.livingstone-slideshow').not('.slick-initialized').each(function() {
+        const $slider = $(this);
+        const slideCount = $slider.children().length;
+        
+        $slider.slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            dots: slideCount > 1,
+            arrows: false,
+            fade: true,
+            autoplay: slideCount > 1,
+            autoplaySpeed: 3000,
+            infinite: slideCount > 1,
+            adaptiveHeight: false,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        dots: slideCount > 1
+                    }
+                }
+            ]
+        });
+    });
+
+    // Initialize generic slick sliders
+    $('.slick-slider').not('.slick-initialized').each(function() {
+        const $slider = $(this);
+        const slideCount = $slider.children().length;
+        
+        $slider.slick({
+            dots: slideCount > 1,
+            arrows: false,
+            autoplay: slideCount > 1,
+            autoplaySpeed: 3000,
+            fade: true,
+            infinite: slideCount > 1,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        dots: slideCount > 1
+                    }
+                }
+            ]
+        });
+    });
+});
 jQuery(document).ready(function($) {
     // Configuration
     const USE_PERCENTAGE_BUFFER = true; // Switch between percentage and pixel buffer

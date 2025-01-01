@@ -19,7 +19,7 @@ $footer_links = get_field('footer_links');
 ?>
 
 
-<div class="guten-block clement-module">
+<div class="guten-block block-slider full-section clement-module">
     <?php if (!empty($variable_logo) && !empty($variable_logo)): ?>
         <div class="module-logo">
             <img src="<?php echo $variable_logo['url']; ?>"
@@ -47,7 +47,7 @@ $footer_links = get_field('footer_links');
 
     <div class="footer-bar">
         <div class="slide-foot-content">
-            <p><?php echo isset($footer_text) ? $footer_text : ''; ?></p>
+            <p><?php echo !empty($footer_text) ? $footer_text : ''; ?></p>
             <?php if (!empty($footer_links) && !empty($footer_links)): ?>
                 <div class="footer-links">
                     <?php foreach ($footer_links as $link): ?>
@@ -60,60 +60,3 @@ $footer_links = get_field('footer_links');
         </div>
     </div>
 </div>
-
-
-
-<script>
-    jQuery(document).ready(function($) {
-        $('.slick-slider').each(function() {
-            const $slider = $(this);
-            const slideCount = $slider.children().length; // Count the number of slides
-            
-            $slider.slick({
-                dots: slideCount > 1, // Show dots only if more than 1 slide
-                arrows: false, // Show arrows for navigation
-                autoplay: true, // Autoplay slides
-                autoplaySpeed: 3000, // Time in ms between slides
-                fade: true,
-                responsive: [
-                    {
-                        breakpoint: 768, // Settings for mobile
-                        settings: {
-                            arrows: false, // Hide arrows on mobile
-                            dots: slideCount > 1 // Keep dots navigation only if more than 1 slide
-                        }
-                    }
-                ]
-            });
-        });
-    });
-</script>
-
-
-
-<script>
-    function adjustSlideshowHeights() {
-        // Select all slideshow-container elements
-        const slideshowContainers = document.querySelectorAll('.slideshow-container');
-
-        slideshowContainers.forEach(slideshow => {
-            // Find the next sibling with the class 'footer-bar'
-            const footerBar = slideshow.nextElementSibling;
-            
-            if (footerBar && footerBar.classList.contains('footer-bar')) {
-                // Get the height of the footer-bar
-                const footerHeight = footerBar.offsetHeight;
-
-                // Set the max height using calc and the CSS variable --header-height
-                slideshow.style.maxHeight = `calc(100vh - ${footerHeight}px - var(--header-height))`;
-            }
-        });
-    }
-
-    // Run the function on initial load
-    adjustSlideshowHeights();
-
-    // Run the function again when the window is resized
-    window.addEventListener('resize', adjustSlideshowHeights);
-</script>
-
