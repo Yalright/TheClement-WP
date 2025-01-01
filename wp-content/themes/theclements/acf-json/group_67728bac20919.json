@@ -285,9 +285,9 @@
                     "message": "",
                     "default_value": 0,
                     "allow_in_bindings": 0,
-                    "ui": 0,
                     "ui_on_text": "",
-                    "ui_off_text": ""
+                    "ui_off_text": "",
+                    "ui": 1
                 },
                 {
                     "key": "field_6772d23968cff",
@@ -303,7 +303,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
+                    "default_value": "Newsletter",
                     "maxlength": "",
                     "allow_in_bindings": 0,
                     "placeholder": "",
@@ -324,7 +324,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
+                    "default_value": "Enter your email",
                     "maxlength": "",
                     "allow_in_bindings": 0,
                     "placeholder": "",
@@ -345,7 +345,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
+                    "default_value": "SIGN UP",
                     "maxlength": "",
                     "allow_in_bindings": 0,
                     "placeholder": "",
@@ -366,7 +366,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
+                    "default_value": "One The Thames London Ltd",
                     "maxlength": "",
                     "allow_in_bindings": 0,
                     "placeholder": "",
@@ -481,5 +481,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1735662945
+    "modified": 1735773371
 }
