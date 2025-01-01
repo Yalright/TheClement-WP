@@ -21,7 +21,7 @@ $specs              = get_field('specs');
 
 ?>
 
-<div class="livingstone-module">
+<div class="guten-block livingstone-module">
     <?php if (isset($variable_name) && !empty($variable_name)): ?>
         <div class="livingstone-name">
             <h3 style="color:<?php echo $variable_color; ?>"><?php echo $variable_name; ?></h3>

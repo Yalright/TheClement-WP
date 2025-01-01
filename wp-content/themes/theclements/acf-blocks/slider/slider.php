@@ -19,7 +19,7 @@ $footer_links = get_field('footer_links');
 ?>
 
 
-<div class="clement-module">
+<div class="guten-block clement-module">
     <?php if (isset($variable_logo) && !empty($variable_logo)): ?>
         <div class="module-logo">
             <img src="<?php echo $variable_logo['url']; ?>"
