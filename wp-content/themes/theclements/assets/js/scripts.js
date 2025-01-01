@@ -242,14 +242,18 @@ jQuery(document).ready(function($) {
 });
 jQuery(document).ready(function($) {
     // Configuration
-    const USE_PERCENTAGE_BUFFER = true; // Switch between percentage and pixel buffer
-    const SCROLL_BUFFER_PX = 200; // Buffer in pixels
-    const SCROLL_BUFFER_PERCENT = 0.25; // Buffer as percentage of viewport height (15%)
-    const SNAP_DELAY = 300; // Delay in milliseconds before snapping
-    const SNAP_SPEED = 500; // Animation speed in milliseconds
+    const USE_PERCENTAGE_BUFFER = true;
+    const SCROLL_BUFFER_PX = 200;
+    const SCROLL_BUFFER_PERCENT = 0.25;
+    const SNAP_DELAY = 300;
+    const SNAP_SPEED = 500;
+    const DEBOUNCE_DELAY = 150; // Delay for debouncing scroll events
+    
     let isScrolling = false;
     let sections = [];
     let lastScrollTime = Date.now();
+    let userIsScrolling = false;
+    let snapTimeout = null;
     
     // Get header height from CSS variable
     const headerHeight = parseInt(getComputedStyle(document.documentElement)
@@ -283,7 +287,6 @@ jQuery(document).ready(function($) {
         sections.forEach(section => {
             const distance = Math.abs(scrollPosition - section.top);
             
-            // Only consider sections within the buffer zone
             if (distance < currentBuffer && distance < nearestDistance) {
                 nearest = section;
                 nearestDistance = distance;
@@ -295,14 +298,14 @@ jQuery(document).ready(function($) {
 
     // Smooth scroll to target
     function scrollToSection(section) {
-        if (isScrolling) return;
+        if (isScrolling || userIsScrolling) return;
         
         isScrolling = true;
         $('html, body').animate({
             scrollTop: section.top
         }, {
             duration: SNAP_SPEED,
-            easing: 'easeInOutCubic', // Smooth easing
+            easing: 'easeInOutCubic',
             complete: function() {
                 isScrolling = false;
             }
@@ -318,27 +321,49 @@ jQuery(document).ready(function($) {
         };
     }
 
-    // Debounce scroll handler
+    // Handle scroll events with debouncing
     let scrollTimeout;
     $(window).on('scroll', function() {
-        if (isScrolling) return;
-        
-        // Update last scroll time
+        // Clear any existing snap timeout
+        if (snapTimeout) {
+            clearTimeout(snapTimeout);
+        }
+
+        // Indicate that user is actively scrolling
+        userIsScrolling = true;
         lastScrollTime = Date.now();
-        
-        clearTimeout(scrollTimeout);
+
+        // Clear existing scroll timeout
+        if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+        }
+
+        // Set new scroll timeout
         scrollTimeout = setTimeout(function() {
-            // Check if enough time has passed since last scroll
-            if (Date.now() - lastScrollTime >= SNAP_DELAY) {
-                const scrollPosition = $(window).scrollTop();
-                const nearestSection = getNearestSection(scrollPosition);
-                
-                // Only snap if we found a section within the buffer
-                if (nearestSection !== null) {
-                    scrollToSection(nearestSection);
+            userIsScrolling = false;
+
+            // Only attempt to snap if user has stopped scrolling
+            snapTimeout = setTimeout(function() {
+                if (!userIsScrolling && !isScrolling) {
+                    const scrollPosition = $(window).scrollTop();
+                    const nearestSection = getNearestSection(scrollPosition);
+                    
+                    if (nearestSection !== null) {
+                        scrollToSection(nearestSection);
+                    }
                 }
-            }
-        }, SNAP_DELAY);
+            }, SNAP_DELAY);
+        }, DEBOUNCE_DELAY);
+    });
+
+    // Stop any ongoing snap if user starts scrolling
+    $(window).on('wheel touchstart mousewheel DOMMouseScroll', function() {
+        if (isScrolling) {
+            $('html, body').stop();
+            isScrolling = false;
+        }
+        userIsScrolling = true;
+        lastScrollTime = Date.now();
     });
 
     // Update sections on resize
