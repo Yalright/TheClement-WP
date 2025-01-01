@@ -19,6 +19,7 @@ $gallery_images = get_field('gallery_images');
 $action_buttons = get_field('action_buttons');
 $specs          = get_field('specs');
 $sections       = get_field('sections');
+$related_properties = get_field('related_properties');
 
 $SOCIALS_CONFIG = get_field('socials', 'option');
 
@@ -151,18 +152,25 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
         </div>
     <?php endif; ?>
 
-    <?php if (!empty($config['related_properties']) && !empty($config['related_properties']['items'])): ?>
+    <?php if (!empty($related_properties['title']) && !empty($related_properties['items'])): ?>
         <div class="related-properties">
-            <?php if (!empty($config['related_properties']['title'])): ?>
-                <h4><?php echo htmlspecialchars($config['related_properties']['title']); ?></h4>
+            <?php if (!empty($related_properties['title'])): ?>
+                <h4><?php echo htmlspecialchars($related_properties['title']); ?></h4>
             <?php endif; ?>
             <div class="property-carousel">
                 <div class="carousel-container">
-                    <?php foreach ($config['related_properties']['items'] as $index => $property): ?>
+                    <?php foreach ($related_properties['items'] as $index => $property): 
+                        $image = $property['image'];
+                        $title = $property['title'];
+                    ?>
                         <div class="carousel-slide <?php echo $index === 1 ? 'active' : ''; ?>">
-                            <img src="<?php echo htmlspecialchars($property['image']); ?>"
-                                alt="<?php echo htmlspecialchars($property['title']); ?>" />
-                            <h4 class="feature-font"><?php echo htmlspecialchars($property['title']); ?></h4>
+                            <?php if (!empty($image)): ?>
+                                <img src="<?php echo esc_url($image['url']); ?>" 
+                                     alt="<?php echo esc_attr($title); ?>" />
+                            <?php endif; ?>
+                            <?php if (!empty($title)): ?>
+                                <h4 class="feature-font"><?php echo esc_html($title); ?></h4>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>

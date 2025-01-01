@@ -339,6 +339,15 @@
     gap: 20px;
     transition: transform 0.3s ease;
     padding: 0 var(--grid-gap);
+    @media (min-width: 769px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        
+        .carousel-slide {
+            opacity: 1;
+        }
+    }
   }
   
   .carousel-slide {
@@ -351,11 +360,22 @@
   
   @media (max-width: 768px) {
     .carousel-slide {
-      flex: 0 0 calc(100% - 40px);
+        flex: 0 0 calc(100% - 40px);
+        opacity: 1;
+        margin-right: 20px;
     }
     
     .carousel-container {
-      padding: 0 20px;
+        padding: 0;
+        margin: 0 20px;
+        
+        .slick-list {
+            overflow: visible;
+        }
+
+        .slick-slide {
+            margin: 0 10px;
+        }
     }
   }
   
