@@ -1,4 +1,19 @@
 jQuery(document).ready(function($) {
+    // Common function to add mousewheel support to a slider
+    function addMousewheelSupport($slider) {
+        $slider.on('mousewheel', function(e) {
+            // Only handle horizontal scrolling
+            if (e.deltaX !== 0) {
+                e.preventDefault();
+                if (e.deltaX > 0) {
+                    $(this).slick('slickNext');
+                } else {
+                    $(this).slick('slickPrev');
+                }
+            }
+        });
+    }
+
     // Initialize gallery container sliders
     $('.gallery-container').not('.slick-initialized').each(function() {
         const $slider = $(this);
@@ -24,6 +39,9 @@ jQuery(document).ready(function($) {
                 }
             ]
         });
+
+        // Add mousewheel support
+        addMousewheelSupport($slider);
     });
 
     // Initialize Livingstone slideshow
@@ -51,6 +69,9 @@ jQuery(document).ready(function($) {
                 }
             ]
         });
+
+        // Add mousewheel support
+        addMousewheelSupport($slider);
     });
 
     // Initialize generic slick sliders
@@ -75,6 +96,9 @@ jQuery(document).ready(function($) {
                 }
             ]
         });
+
+        // Add mousewheel support
+        addMousewheelSupport($slider);
     });
 
     // Initialize mobile-only carousel for related properties

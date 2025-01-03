@@ -3,9 +3,32 @@ function site_scripts()
 {
 	global $wp_styles; // Call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
 
-	// Adding scripts file in the footer
-	wp_enqueue_script('slick-js', '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', array('jquery'), '1.8.1', true);
-	wp_enqueue_script('site-js', get_template_directory_uri() . '/assets/js/scripts.js', array('jquery', 'slick-js'), '1.0', true);
+	// First load jQuery
+	wp_enqueue_script('jquery');
+	
+	// Then load mousewheel plugin
+	wp_enqueue_script(
+		'jquery-mousewheel',
+		'https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js',
+		array('jquery'),
+		'3.1.13',
+		true
+	);
+	
+	// Then load slick
+	wp_enqueue_script('slick-js', '//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js', 
+		array('jquery', 'jquery-mousewheel'), 
+		'1.8.1', 
+		true
+	);
+	
+	// Finally load your site scripts
+	wp_enqueue_script('site-js', 
+		get_template_directory_uri() . '/assets/js/scripts.js', 
+		array('jquery', 'jquery-mousewheel', 'slick-js'), 
+		'1.0', 
+		true
+	);
 
 	// Register main stylesheet
 	wp_enqueue_style('site-css', get_template_directory_uri() . '/assets/css/main.css', array(), '1.0');
