@@ -22,11 +22,7 @@
 
 // Templates
 
-// Blocks
-// @import "acf-blocks/_hero-banner";
-@import "../../acf-blocks/slider/slider";
-@import "../../acf-blocks/details/details";
-@import "../../acf-blocks/listing/listing";
+
 
 // Blocks (Flex)
 
@@ -38,3 +34,10 @@
 @import "flats/_module-header";
 // @import "flats/_module-slider";
 @import "flats/_style";
+
+
+// Blocks
+// @import "acf-blocks/_hero-banner";
+@import "../../acf-blocks/slider/slider";
+@import "../../acf-blocks/details/details";
+@import "../../acf-blocks/listing/listing";

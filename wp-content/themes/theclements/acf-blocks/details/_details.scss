@@ -158,7 +158,14 @@
     align-items: center;
     gap: 5px;
     height: 35px;
-    width: 35px;
+    // width: 35px;
+    img, svg {
+      display:block;
+      width:35px;
+      height:35px;
+      object-fit: contain;
+      object-position: center;
+    }
   }
   
   .property-description {

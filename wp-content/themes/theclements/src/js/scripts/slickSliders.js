@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
             slidesToShow: 1,
             slidesToScroll: 1,
             dots: slideCount > 1,
-            arrows: false,
+            arrows: true,
             fade: true,
             autoplay: slideCount > 1,
             autoplaySpeed: 3000,
@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
                 {
                     breakpoint: 768,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: slideCount > 1
                     }
                 }
@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
             slidesToShow: 1,
             slidesToScroll: 1,
             dots: slideCount > 1,
-            arrows: false,
+            arrows: true,
             fade: true,
             autoplay: slideCount > 1,
             autoplaySpeed: 3000,
@@ -45,7 +45,7 @@ jQuery(document).ready(function($) {
                 {
                     breakpoint: 768,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: slideCount > 1
                     }
                 }
@@ -60,7 +60,7 @@ jQuery(document).ready(function($) {
         
         $slider.slick({
             dots: slideCount > 1,
-            arrows: false,
+            arrows: true,
             autoplay: slideCount > 1,
             autoplaySpeed: 3000,
             fade: true,
@@ -69,7 +69,7 @@ jQuery(document).ready(function($) {
                 {
                     breakpoint: 768,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: slideCount > 1
                     }
                 }

@@ -93,6 +93,12 @@
   width: 24px;
   height: 24px;
 
+  img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    object-position: center;
+  }
 }
 
 /* Legal section at bottom */

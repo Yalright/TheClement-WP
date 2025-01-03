@@ -121,7 +121,7 @@ jQuery(document).ready(function($) {
             slidesToShow: 1,
             slidesToScroll: 1,
             dots: slideCount > 1,
-            arrows: false,
+            arrows: true,
             fade: true,
             autoplay: slideCount > 1,
             autoplaySpeed: 3000,
@@ -131,7 +131,7 @@ jQuery(document).ready(function($) {
                 {
                     breakpoint: 768,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: slideCount > 1
                     }
                 }
@@ -148,7 +148,7 @@ jQuery(document).ready(function($) {
             slidesToShow: 1,
             slidesToScroll: 1,
             dots: slideCount > 1,
-            arrows: false,
+            arrows: true,
             fade: true,
             autoplay: slideCount > 1,
             autoplaySpeed: 3000,
@@ -158,7 +158,7 @@ jQuery(document).ready(function($) {
                 {
                     breakpoint: 768,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: slideCount > 1
                     }
                 }
@@ -173,7 +173,7 @@ jQuery(document).ready(function($) {
         
         $slider.slick({
             dots: slideCount > 1,
-            arrows: false,
+            arrows: true,
             autoplay: slideCount > 1,
             autoplaySpeed: 3000,
             fade: true,
@@ -182,7 +182,7 @@ jQuery(document).ready(function($) {
                 {
                     breakpoint: 768,
                     settings: {
-                        arrows: false,
+                        arrows: true,
                         dots: slideCount > 1
                     }
                 }
@@ -242,137 +242,226 @@ jQuery(document).ready(function($) {
 });
 jQuery(document).ready(function($) {
     // Configuration
-    const USE_PERCENTAGE_BUFFER = true;
-    const SCROLL_BUFFER_PX = 200;
-    const SCROLL_BUFFER_PERCENT = 0.25;
-    const SNAP_DELAY = 300;
-    const SNAP_SPEED = 500;
-    const DEBOUNCE_DELAY = 150; // Delay for debouncing scroll events
-    
-    let isScrolling = false;
-    let sections = [];
-    let lastScrollTime = Date.now();
-    let userIsScrolling = false;
-    let snapTimeout = null;
-    
-    // Get header height from CSS variable
-    const headerHeight = parseInt(getComputedStyle(document.documentElement)
-        .getPropertyValue('--header-height')) || 0;
-    
-    // Calculate buffer based on setting
-    function getBuffer() {
-        if (USE_PERCENTAGE_BUFFER) {
-            return $(window).height() * SCROLL_BUFFER_PERCENT;
+    const CONFIG = {
+        sectionSelector: '.guten-block:not(.block-details)',
+        headerSelector: 'header.header',
+        footerSelector: 'footer.site-footer',
+        headerOffset: parseInt(getComputedStyle(document.documentElement)
+            .getPropertyValue('--header-height')) || 0,
+        animationSpeed: 250,
+        easing: 'easeOutExpo',
+        debounceDelay: 50,
+        wheelThreshold: 1,
+        activeClass: 'section-active'
+    };
+
+    let state = {
+        sections: [],
+        headerSection: null,
+        footerSection: null,
+        currentIndex: 0,
+        isAnimating: false,
+        isInHeader: false,
+        isInFooter: false
+    };
+
+    // Initialize sections data
+    function initSections() {
+        // Get header data
+        const $header = $(CONFIG.headerSelector);
+        if ($header.length) {
+            state.headerSection = {
+                element: $header,
+                top: 0,
+                height: $header.outerHeight(),
+                isHeader: true
+            };
         }
-        return SCROLL_BUFFER_PX;
-    }
-    
-    // Get all sections and their positions
-    function updateSections() {
-        sections = $('.guten-block').map(function() {
+
+        // Get main sections
+        state.sections = $(CONFIG.sectionSelector).map(function(index) {
+            const $element = $(this);
             return {
-                element: $(this),
-                top: $(this).offset().top - headerHeight,
-                height: $(this).outerHeight()
+                element: $element,
+                top: $element.offset().top - CONFIG.headerOffset,
+                height: $element.outerHeight(),
+                index: index
             };
         }).get();
+
+        // Get footer data
+        const $footer = $(CONFIG.footerSelector);
+        if ($footer.length) {
+            state.footerSection = {
+                element: $footer,
+                top: $footer.offset().top - CONFIG.headerOffset,
+                height: $footer.outerHeight(),
+                isFooter: true
+            };
+        }
+        
+        updateActiveSection();
     }
 
-    // Find the nearest section based on scroll position
-    function getNearestSection(scrollPosition) {
-        let nearest = null;
-        let nearestDistance = Infinity;
-        const currentBuffer = getBuffer();
+    // Update active section based on scroll position
+    function updateActiveSection() {
+        const currentScroll = $(window).scrollTop();
+        const windowHeight = $(window).height();
+        const windowCenter = currentScroll + (windowHeight / 2);
+        const footerTriggerPoint = currentScroll + (windowHeight * 0.9);
 
-        sections.forEach(section => {
-            const distance = Math.abs(scrollPosition - section.top);
-            
-            if (distance < currentBuffer && distance < nearestDistance) {
-                nearest = section;
-                nearestDistance = distance;
-            }
+        // Remove active class from all elements
+        state.sections.forEach(section => section.element.removeClass(CONFIG.activeClass));
+        if (state.headerSection) state.headerSection.element.removeClass(CONFIG.activeClass);
+        if (state.footerSection) state.footerSection.element.removeClass(CONFIG.activeClass);
+
+        // Check if we're in header
+        if (state.headerSection && windowCenter < state.sections[0].top) {
+            state.headerSection.element.addClass(CONFIG.activeClass);
+            state.isInHeader = true;
+            state.isInFooter = false;
+            return;
+        }
+
+        // Check if footer is 20% in viewport
+        if (state.footerSection && footerTriggerPoint >= state.footerSection.top) {
+            state.footerSection.element.addClass(CONFIG.activeClass);
+            state.isInHeader = false;
+            state.isInFooter = true;
+            return;
+        }
+
+        // Find active main section
+        const activeSection = state.sections.find(section => {
+            const sectionTop = section.top;
+            const sectionBottom = section.top + section.height;
+            return windowCenter >= sectionTop && windowCenter < sectionBottom;
         });
 
-        return nearest;
+        if (activeSection) {
+            activeSection.element.addClass(CONFIG.activeClass);
+            state.currentIndex = activeSection.index;
+            state.isInHeader = false;
+            state.isInFooter = false;
+        }
+    }
+
+    // Get next/prev section based on direction
+    function getTargetSection(direction) {
+        if (state.sections.length === 0) return null;
+
+        // If in footer and scrolling up, get last main section
+        if (state.isInFooter && direction === 'prev') {
+            return state.sections[state.sections.length - 1];
+        }
+
+        // If in header and scrolling down, get first main section
+        if (state.isInHeader && direction === 'next') {
+            return state.sections[0];
+        }
+
+        const targetIndex = direction === 'next' 
+            ? state.currentIndex + 1 
+            : state.currentIndex - 1;
+
+        return state.sections[targetIndex] || null;
+    }
+
+    // Check if we're at the last section
+    function checkLastSection() {
+        if (state.sections.length === 0) return false;
+        const lastSection = state.sections[state.sections.length - 1];
+        return lastSection.element.hasClass(CONFIG.activeClass);
     }
 
     // Smooth scroll to target
     function scrollToSection(section) {
-        if (isScrolling || userIsScrolling) return;
+        if (state.isAnimating) return;
         
-        isScrolling = true;
+        state.isAnimating = true;
+        
         $('html, body').animate({
             scrollTop: section.top
         }, {
-            duration: SNAP_SPEED,
-            easing: 'easeInOutCubic',
-            complete: function() {
-                isScrolling = false;
+            duration: CONFIG.animationSpeed,
+            easing: CONFIG.easing,
+            complete: () => {
+                state.isAnimating = false;
+                updateActiveSection();
+            },
+            step: () => {
+                // Update active section during animation
+                updateActiveSection();
             }
         });
     }
 
-    // Add jQuery easing if it doesn't exist
-    if (typeof $.easing.easeInOutCubic === 'undefined') {
-        $.easing.easeInOutCubic = function(x) {
-            return x < 0.5 ?
-                4 * x * x * x :
-                1 - Math.pow(-2 * x + 2, 3) / 2;
+    // Add custom easing if not exists
+    if (typeof $.easing.easeOutExpo === 'undefined') {
+        $.easing.easeOutExpo = function(x) {
+            return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
         };
     }
 
-    // Handle scroll events with debouncing
+    // Wheel event handler with debounce
+    let wheelTimeout;
+    $(window).on('wheel', function(event) {
+        // Clear existing timeout
+        if (wheelTimeout) {
+            clearTimeout(wheelTimeout);
+        }
+
+        wheelTimeout = setTimeout(() => {
+            const delta = event.originalEvent.deltaY;
+            const direction = delta > 0 ? 'next' : 'prev';
+            
+            // Allow normal scroll if at last section and scrolling down
+            if (direction === 'next' && checkLastSection()) {
+                return;
+            }
+
+            // Only process if wheel movement is significant
+            if (Math.abs(delta) > CONFIG.wheelThreshold && !state.isAnimating) {
+                event.preventDefault();
+                
+                const targetSection = getTargetSection(direction);
+                if (targetSection) {
+                    scrollToSection(targetSection);
+                }
+            }
+        }, CONFIG.debounceDelay);
+    });
+
+    // Handle scroll events for active section updates
     let scrollTimeout;
     $(window).on('scroll', function() {
-        // Clear any existing snap timeout
-        if (snapTimeout) {
-            clearTimeout(snapTimeout);
+        if (!state.isAnimating) {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            scrollTimeout = setTimeout(updateActiveSection, 50);
         }
-
-        // Indicate that user is actively scrolling
-        userIsScrolling = true;
-        lastScrollTime = Date.now();
-
-        // Clear existing scroll timeout
-        if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
-        }
-
-        // Set new scroll timeout
-        scrollTimeout = setTimeout(function() {
-            userIsScrolling = false;
-
-            // Only attempt to snap if user has stopped scrolling
-            snapTimeout = setTimeout(function() {
-                if (!userIsScrolling && !isScrolling) {
-                    const scrollPosition = $(window).scrollTop();
-                    const nearestSection = getNearestSection(scrollPosition);
-                    
-                    if (nearestSection !== null) {
-                        scrollToSection(nearestSection);
-                    }
-                }
-            }, SNAP_DELAY);
-        }, DEBOUNCE_DELAY);
     });
 
-    // Stop any ongoing snap if user starts scrolling
-    $(window).on('wheel touchstart mousewheel DOMMouseScroll', function() {
-        if (isScrolling) {
-            $('html, body').stop();
-            isScrolling = false;
-        }
-        userIsScrolling = true;
-        lastScrollTime = Date.now();
-    });
-
-    // Update sections on resize
+    // Handle resize
     let resizeTimeout;
     $(window).on('resize', function() {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(updateSections, 250);
+        resizeTimeout = setTimeout(() => {
+            initSections();
+            updateActiveSection();
+        }, 250);
+    });
+
+    // Stop any ongoing animation if user tries to scroll
+    $(window).on('touchstart mousewheel DOMMouseScroll', function() {
+        if (state.isAnimating) {
+            $('html, body').stop();
+            state.isAnimating = false;
+            updateActiveSection();
+        }
     });
 
     // Initial setup
-    updateSections();
+    initSections();
 });

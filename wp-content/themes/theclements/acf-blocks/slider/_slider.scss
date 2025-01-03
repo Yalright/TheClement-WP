@@ -1,4 +1,3 @@
-
 .clement-module {
     min-height: 100%;
     width: 100%;
@@ -28,8 +27,8 @@
     touch-action: pan-y pinch-zoom;
     user-select: none;
     -webkit-user-select: none;
-    height:calc(100vh - 119px);
-    max-height:calc(100vh - 119px);
+    height: calc(100vh - 119px);
+    max-height: calc(100vh - 119px);
 }
 
 .slideshow-container .slide {
@@ -48,7 +47,8 @@
     // opacity: 1;
 }
 
-.dots-container, .slick-dots {
+.dots-container,
+.slick-dots {
     position: absolute;
     bottom: 20px;
     left: 20px;
@@ -58,23 +58,81 @@
     list-style: none;
 }
 
-.dot, .slick-dots li {
+.dot,
+.slick-dots li {
     width: 30px;
     height: 2px;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 0;
     cursor: pointer;
     transition: background-color 0.3s ease;
+
     button {
-        display:none;
+        display: none;
     }
+
     &::marker {
-        display:none;
+        display: none;
     }
 }
 
-.dot.active, .slick-dots li.slick-active {
+.dot.active,
+.slick-dots li.slick-active {
     background-color: #fff;
+}
+
+.slick-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    color: var(--color-dark);
+    @include buttonReset;
+    cursor: pointer;
+    font-size: 0;
+
+    &:before {
+        // font-size:24px;
+    }
+
+    &.slick-prev,
+    &.slick-next {
+        z-index:2;
+        &:before {
+            content: "";
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 75px;
+            height: 75px;
+            display: block;
+        }
+    }
+
+    &.slick-prev {
+        left: 20px;
+        opacity: 0.3;
+        transition: opacity 0.2s ease;
+        &:before {
+            background-image: url('../images/svgs/icons/arrow-right-white.svg');
+            transform: rotate(180deg);
+        }
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &.slick-next {
+        right: 20px;
+        opacity: 0.3;
+        transition: opacity 0.2s ease;
+        &:before {
+            background-image: url('../images/svgs/icons/arrow-right-white.svg');
+        }
+        &:hover {
+            opacity: 1;
+        }
+    }
 }
 
 .footer-bar {

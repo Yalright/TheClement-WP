@@ -59,8 +59,18 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                 <div class="property-specs">
                     <?php foreach ($specs as $spec): ?>
                         <span class="spec">
-                            <img src="<?php echo htmlspecialchars($spec['icon']['url']); ?>"
+                            <?php
+                            $file_extension = pathinfo($spec['icon']['url'], PATHINFO_EXTENSION);
+                            if ($file_extension === 'svg' && !is_admin()) {
+                                echo file_get_contents($spec['icon']['url']);
+                            } else {
+                            ?>
+                                <img src="<?php echo htmlspecialchars($spec['icon']['url']); ?>"
                                 alt="<?php echo htmlspecialchars($spec['icon']['alt']); ?>" />
+                            <?php
+                            }
+                            ?>
+                            
                             <?php echo htmlspecialchars($spec['content']); ?>
                         </span>
                     <?php endforeach; ?>
@@ -159,14 +169,14 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
             <?php endif; ?>
             <div class="property-carousel">
                 <div class="carousel-container">
-                    <?php foreach ($related_properties['items'] as $index => $property): 
+                    <?php foreach ($related_properties['items'] as $index => $property):
                         $image = $property['image'];
                         $title = $property['title'];
                     ?>
                         <div class="carousel-slide <?php echo $index === 1 ? 'active' : ''; ?>">
                             <?php if (!empty($image)): ?>
-                                <img src="<?php echo esc_url($image['url']); ?>" 
-                                     alt="<?php echo esc_attr($title); ?>" />
+                                <img src="<?php echo esc_url($image['url']); ?>"
+                                    alt="<?php echo esc_attr($title); ?>" />
                             <?php endif; ?>
                             <?php if (!empty($title)): ?>
                                 <h4 class="feature-font"><?php echo esc_html($title); ?></h4>
