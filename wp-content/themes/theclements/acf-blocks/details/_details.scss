@@ -346,6 +346,9 @@
     gap: 20px;
     transition: transform 0.3s ease;
     padding: 0 var(--grid-gap);
+    .slick-slide {
+      margin: 0 10px;
+  }
     @media (min-width: 769px) {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -353,6 +356,12 @@
         
         .carousel-slide {
             opacity: 1;
+            position: relative;
+            a.link {
+              position:absolute;
+              inset:0;
+              font-size:0;
+            }
         }
     }
   }

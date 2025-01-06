@@ -172,6 +172,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                     <?php foreach ($related_properties['items'] as $index => $property):
                         $image = $property['image'];
                         $title = $property['title'];
+                        $link = $property['link'];
                     ?>
                         <div class="carousel-slide <?php echo $index === 1 ? 'active' : ''; ?>">
                             <?php if (!empty($image)): ?>
@@ -180,6 +181,9 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                             <?php endif; ?>
                             <?php if (!empty($title)): ?>
                                 <h4 class="feature-font"><?php echo esc_html($title); ?></h4>
+                            <?php endif; ?>
+                            <?php if (!empty($link)): ?>
+                                <a href="<?php echo esc_url($link['url']); ?>" class="link"><?php echo esc_html($link['title']); ?></a>
                             <?php endif; ?>
                         </div>
                     <?php endforeach; ?>

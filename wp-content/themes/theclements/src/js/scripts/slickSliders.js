@@ -101,53 +101,33 @@ jQuery(document).ready(function($) {
         addMousewheelSupport($slider);
     });
 
-    // Initialize mobile-only carousel for related properties
-    function initMobileCarousel() {
-        const $carousel = $('.carousel-container');
-        
-        if (window.innerWidth <= 768) {
-            if (!$carousel.hasClass('slick-initialized')) {
-                $carousel.slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    dots: false,
-                    arrows: false,
-                    fade: false,
-                    infinite: false,
-                    adaptiveHeight: false,
-                    centerMode: true,
-                    variableWidth: false,
-                    swipeToSlide: true,
-                    touchThreshold: 10,
-                    cssEase: 'ease-out',
-                    speed: 300,
-                    responsive: [
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1
-                            }
-                        }
-                    ]
-                });
-            }
-        } else {
-            if ($carousel.hasClass('slick-initialized')) {
-                $carousel.slick('unslick');
-            }
-        }
+    // Initialize carousel for related properties
+    const $carousel = $('.carousel-container');
+    if ($carousel.length) {
+        $carousel.slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            dots: false,
+            arrows: true,
+            fade: false,
+            infinite: true,
+            adaptiveHeight: false,
+            centerMode: true,
+            variableWidth: false,
+            swipeToSlide: true,
+            touchThreshold: 10,
+            cssEase: 'ease-out',
+            speed: 300,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        centerMode: true
+                    }
+                }
+            ]
+        });
     }
-
-    // Initialize on load
-    initMobileCarousel();
-
-    // Re-initialize on resize
-    let resizeTimer;
-    $(window).on('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            initMobileCarousel();
-        }, 250);
-    });
 });
