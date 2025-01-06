@@ -8,10 +8,17 @@ function adjustSlideshowHeights() {
         const footerBar = slideshow.nextElementSibling;
         if (footerBar && (footerBar.classList.contains('footer-bar') || footerBar.classList.contains('livingstone-footer'))) {
             // Get the height of the footer-bar
-            const footerHeight = footerBar.offsetHeight;
-
-            // Set the max height using calc and the CSS variable --header-height
+            const footerHeight = parseInt(footerBar.offsetHeight);
+            
+            // Set the max height using string concatenation instead of template literals
+            // slideshow.style.maxHeight = 'calc(100vh - ' + footerHeight + 'px)';
             slideshow.style.maxHeight = `calc(100vh - ${footerHeight}px - var(--header-height))`;
+            
+            // Set the parent's height
+            // const parentElement = slideshow.parentElement;
+            // if (parentElement) {
+            //     parentElement.style.height = 'calc(100vh - var(--header-height))';
+            // }
         }
     });
 }

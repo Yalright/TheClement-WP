@@ -28,6 +28,16 @@
   flex: 1 0 calc(100vh - 200px);
   position: relative;
   overflow: hidden;
+  .slick-slide {
+    picture {
+        img {
+            object-fit: cover;
+            object-position: center;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
 }
 
 .livingstone-slideshow .livingstone-slide {

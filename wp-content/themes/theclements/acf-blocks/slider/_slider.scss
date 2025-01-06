@@ -20,6 +20,17 @@
     min-width: 200px;
 }
 
+.block-slider,
+.block-listing {
+    height: calc(100vh - var(--header-height));
+    .slick-list {
+        height:100%;
+        .slick-track {
+            height:100%;
+        }
+    }
+}
+
 .slideshow-container {
     flex: 1;
     position: relative;
@@ -29,6 +40,16 @@
     -webkit-user-select: none;
     height: calc(100vh - 119px);
     max-height: calc(100vh - 119px);
+    .slick-slide {
+        picture {
+            img {
+                object-fit: cover;
+                object-position: center;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
 }
 
 .slideshow-container .slide {
