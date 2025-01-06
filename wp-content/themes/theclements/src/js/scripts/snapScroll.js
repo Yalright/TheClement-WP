@@ -8,9 +8,10 @@ jQuery(document).ready(function($) {
             .getPropertyValue('--header-height')) || 0,
         animationSpeed: 250,
         easing: 'easeOutExpo',
-        debounceDelay: 50,
+        debounceDelay: 0,
         wheelThreshold: 1,
-        activeClass: 'section-active'
+        activeClass: 'section-active',
+        scrollCooldown: 600  // Cooldown period in milliseconds after scroll completion
     };
 
     let state = {
@@ -20,8 +21,65 @@ jQuery(document).ready(function($) {
         currentIndex: 0,
         isAnimating: false,
         isInHeader: false,
-        isInFooter: false
+        isInFooter: false,
+        isCoolingDown: false
     };
+
+    // Native wheel event handler to block scrolling during cooldown
+    document.addEventListener('wheel', function(event) {
+        if (state.isCoolingDown) {
+            event.preventDefault();
+            return false;
+        }
+    }, { passive: false });
+
+    // Wheel event handler for snap scrolling
+    let wheelTimeout;
+    $(window).on('wheel', function(event) {
+        if (state.isCoolingDown || state.isAnimating) {
+            return;
+        }
+
+        // Clear existing timeout
+        if (wheelTimeout) {
+            clearTimeout(wheelTimeout);
+        }
+
+        wheelTimeout = setTimeout(() => {
+            const delta = event.originalEvent.deltaY;
+            const direction = delta > 0 ? 'next' : 'prev';
+            
+            // Allow normal scroll if at last section and scrolling down
+            if (direction === 'next' && checkLastSection()) {
+                return;
+            }
+
+            // Only process if wheel movement is significant
+            if (Math.abs(delta) > CONFIG.wheelThreshold) {
+                const targetSection = getTargetSection(direction);
+                if (targetSection) {
+                    scrollToSection(targetSection);
+                }
+            }
+        }, CONFIG.debounceDelay);
+    });
+
+    // Touch event handler - only prevent when necessary
+    const touchHandler = function(event) {
+        if (state.isCoolingDown && state.isAnimating) {
+            event.preventDefault();
+            return false;
+        }
+    };
+
+    // Add touch event listener with passive: false
+    window.addEventListener('touchmove', touchHandler, { passive: false });
+
+    // Clean up function
+    function cleanupEvents() {
+        window.removeEventListener('wheel', wheelHandler);
+        window.removeEventListener('touchmove', touchHandler);
+    }
 
     // Initialize sections data
     function initSections() {
@@ -68,6 +126,9 @@ jQuery(document).ready(function($) {
         const windowCenter = currentScroll + (windowHeight / 2);
         const footerTriggerPoint = currentScroll + (windowHeight * 0.9);
 
+        // Store current active section for comparison
+        let previousActiveIndex = state.currentIndex;
+
         // Remove active class from all elements
         state.sections.forEach(section => section.element.removeClass(CONFIG.activeClass));
         if (state.headerSection) state.headerSection.element.removeClass(CONFIG.activeClass);
@@ -78,6 +139,13 @@ jQuery(document).ready(function($) {
             state.headerSection.element.addClass(CONFIG.activeClass);
             state.isInHeader = true;
             state.isInFooter = false;
+            if (!state.isInHeader) {
+                // Trigger cooldown when entering header
+                state.isCoolingDown = true;
+                setTimeout(() => {
+                    state.isCoolingDown = false;
+                }, CONFIG.scrollCooldown);
+            }
             return;
         }
 
@@ -86,6 +154,13 @@ jQuery(document).ready(function($) {
             state.footerSection.element.addClass(CONFIG.activeClass);
             state.isInHeader = false;
             state.isInFooter = true;
+            if (!state.isInFooter) {
+                // Trigger cooldown when entering footer
+                state.isCoolingDown = true;
+                setTimeout(() => {
+                    state.isCoolingDown = false;
+                }, CONFIG.scrollCooldown);
+            }
             return;
         }
 
@@ -98,6 +173,15 @@ jQuery(document).ready(function($) {
 
         if (activeSection) {
             activeSection.element.addClass(CONFIG.activeClass);
+            
+            // If the active section has changed, trigger cooldown
+            if (previousActiveIndex !== activeSection.index) {
+                state.isCoolingDown = true;
+                setTimeout(() => {
+                    state.isCoolingDown = false;
+                }, CONFIG.scrollCooldown);
+            }
+            
             state.currentIndex = activeSection.index;
             state.isInHeader = false;
             state.isInFooter = false;
@@ -134,7 +218,7 @@ jQuery(document).ready(function($) {
 
     // Smooth scroll to target
     function scrollToSection(section) {
-        if (state.isAnimating) return;
+        if (state.isAnimating || state.isCoolingDown) return;
         
         state.isAnimating = true;
         
@@ -146,9 +230,14 @@ jQuery(document).ready(function($) {
             complete: () => {
                 state.isAnimating = false;
                 updateActiveSection();
+                
+                // Start cooldown period
+                state.isCoolingDown = true;
+                setTimeout(() => {
+                    state.isCoolingDown = false;
+                }, CONFIG.scrollCooldown);
             },
             step: () => {
-                // Update active section during animation
                 updateActiveSection();
             }
         });
@@ -161,38 +250,9 @@ jQuery(document).ready(function($) {
         };
     }
 
-    // Wheel event handler with debounce
-    let wheelTimeout;
-    $(window).on('wheel', function(event) {
-        // Clear existing timeout
-        if (wheelTimeout) {
-            clearTimeout(wheelTimeout);
-        }
-
-        wheelTimeout = setTimeout(() => {
-            const delta = event.originalEvent.deltaY;
-            const direction = delta > 0 ? 'next' : 'prev';
-            
-            // Allow normal scroll if at last section and scrolling down
-            if (direction === 'next' && checkLastSection()) {
-                return;
-            }
-
-            // Only process if wheel movement is significant
-            if (Math.abs(delta) > CONFIG.wheelThreshold && !state.isAnimating) {
-                event.preventDefault();
-                
-                const targetSection = getTargetSection(direction);
-                if (targetSection) {
-                    scrollToSection(targetSection);
-                }
-            }
-        }, CONFIG.debounceDelay);
-    });
-
     // Handle scroll events for active section updates
     let scrollTimeout;
-    $(window).on('scroll', function() {
+    $(window).on('scroll.snapScroll', function() {
         if (!state.isAnimating) {
             if (scrollTimeout) {
                 clearTimeout(scrollTimeout);
@@ -213,7 +273,7 @@ jQuery(document).ready(function($) {
 
     // Stop any ongoing animation if user tries to scroll
     $(window).on('touchstart mousewheel DOMMouseScroll', function() {
-        if (state.isAnimating) {
+        if (state.isAnimating && !state.isCoolingDown) {
             $('html, body').stop();
             state.isAnimating = false;
             updateActiveSection();
@@ -222,4 +282,9 @@ jQuery(document).ready(function($) {
 
     // Initial setup
     initSections();
+
+    // Clean up event handlers when needed
+    function cleanupEvents() {
+        $(window).off('.snapScroll');
+    }
 });

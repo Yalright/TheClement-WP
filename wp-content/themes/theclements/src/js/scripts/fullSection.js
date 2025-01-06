@@ -9,15 +9,8 @@ function adjustSlideshowHeights() {
             // Get the height of the footer-bar
             const footerHeight = parseInt(footerBar.offsetHeight);
             
-            // Set the max height using string concatenation instead of template literals
-            // slideshow.style.maxHeight = 'calc(100vh - ' + footerHeight + 'px)';
-            slideshow.style.maxHeight = `calc(100vh - ${footerHeight}px - var(--header-height))`;
-            
-            // Set the parent's height
-            // const parentElement = slideshow.parentElement;
-            // if (parentElement) {
-            //     parentElement.style.height = 'calc(100vh - var(--header-height))';
-            // }
+            // Set the max height using string concatenation
+            slideshow.style.maxHeight = 'calc(100vh - ' + footerHeight + 'px - var(--header-height))';
         }
     });
 }
