@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "name": "acf/video",
+    "title": "Video",
+    "description": "Displays a video with various styles.",
+    "category": "custom-blocks",
+    "icon": "cover-image",
+    "keywords": ["video"],
+    "mode": "auto",
+    "supports": {
+        "mode": true,
+        "html": false,
+        "align": true
+    },
+    "acf": {
+        "mode": "auto",
+        "renderTemplate": "video.php"
+    },
+    "editorScript": "file:./video.js",
+    "editorStyle": "file:./video-editor.css"
+}

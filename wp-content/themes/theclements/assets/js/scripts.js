@@ -1,7 +1,7 @@
 
 function adjustSlideshowHeights() {
     // Select all slideshow container elements
-    const slideshowContainers = document.querySelectorAll('.slideshow-container, .livingstone-slideshow');
+    const slideshowContainers = document.querySelectorAll('.slideshow-container, .livingstone-slideshow, .video-container');
 
     slideshowContainers.forEach(slideshow => {
         // Find the next sibling with the class 'footer-bar'
