@@ -22,6 +22,22 @@ function site_scripts()
 		true
 	);
 	
+	// Load fullPage.js
+	wp_enqueue_script(
+		'fullpage-js',
+		'https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js',
+		array('jquery'),
+		'4.0.20',
+		true
+	);
+	
+	wp_enqueue_style(
+		'fullpage-css',
+		'https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css',
+		array(),
+		'4.0.20'
+	);
+	
 	// Finally load your site scripts
 	wp_enqueue_script('site-js', 
 		get_template_directory_uri() . '/assets/js/scripts.js', 

@@ -11,7 +11,8 @@
 .module-logo {
     position: absolute;
     z-index: 9;
-    top: 0;
+    // top: 0;
+    top: var(--header-height);
     left: 50%;
     transform: translateX(-50%);
     width: calc(27vw);

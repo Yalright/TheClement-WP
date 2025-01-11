@@ -89,6 +89,10 @@
   a:hover {
     color: var(--color-dark, #666);
   }
+
+  body {
+    background:var(--color-module-footer);
+  }
   
   /* Main content area */
   .main-content {
