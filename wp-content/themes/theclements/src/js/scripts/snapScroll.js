@@ -12,6 +12,7 @@ jQuery(document).ready(function($) {
     $('.main-content').fullpage({
         // License
         licenseKey: 'N171H-04IZ8-PBIJ8-PSI48-QMXNN',
+        credits: false,
         
         // Scrolling
         scrollingSpeed: 250,
