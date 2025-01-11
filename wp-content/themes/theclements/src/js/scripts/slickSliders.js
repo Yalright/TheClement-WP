@@ -129,5 +129,8 @@ jQuery(document).ready(function($) {
                 }
             ]
         });
+        
+        // Add mousewheel support
+        addMousewheelSupport($carousel);
     }
 });

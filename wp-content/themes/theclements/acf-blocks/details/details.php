@@ -52,7 +52,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
     ): ?>
         <div class="property-details">
             <?php if (!empty($title)): ?>
-                <h1 class="property-title"><?php echo htmlspecialchars($title); ?></h1>
+                <h1 class="property-title"><?php echo $title; ?></h1>
             <?php endif; ?>
 
             <?php if (!empty($specs)): ?>
@@ -62,16 +62,22 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                             <?php
                             $file_extension = pathinfo($spec['icon']['url'], PATHINFO_EXTENSION);
                             if ($file_extension === 'svg' && !is_admin()) {
-                                echo file_get_contents($spec['icon']['url']);
+                                $response = wp_remote_get($spec['icon']['url']);
+                                if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                                    echo wp_remote_retrieve_body($response);
+                                } else {
+                                    // Fallback to img tag if request fails
+                                    echo '<img src="' . $spec['icon']['url'] . '" alt="' . $spec['icon']['alt'] . '" />';
+                                }
                             } else {
                             ?>
-                                <img src="<?php echo htmlspecialchars($spec['icon']['url']); ?>"
-                                alt="<?php echo htmlspecialchars($spec['icon']['alt']); ?>" />
+                                <img src="<?php echo $spec['icon']['url']; ?>"
+                                alt="<?php echo $spec['icon']['alt']; ?>" />
                             <?php
                             }
                             ?>
                             
-                            <?php echo htmlspecialchars($spec['content']); ?>
+                            <?php echo $spec['content']; ?>
                         </span>
                     <?php endforeach; ?>
                 </div>
@@ -79,7 +85,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
 
             <?php if (!empty($description)): ?>
                 <p class="property-description">
-                    <?php echo htmlspecialchars($description); ?>
+                    <?php echo $description; ?>
                 </p>
             <?php endif; ?>
 
@@ -103,8 +109,8 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
             <!-- <?php if (!empty($action_buttons)): ?>
                     <div class="property-actions">
                         <?php foreach ($action_buttons as $button): ?>
-                            <button class="action-button btn" data-action="<?php echo htmlspecialchars($action); ?>">
-                                <?php echo htmlspecialchars($text); ?>
+                            <button class="action-button btn" data-action="<?php echo $action; ?>">
+                                <?php echo $text; ?>
                             </button>
                         <?php endforeach; ?>
                     </div>
@@ -123,19 +129,19 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
             <?php foreach ($sections as $section): ?>
                 <div class="section">
                     <button class="section-toggle btn" aria-expanded="false">
-                        <span><?php echo htmlspecialchars($section['title']); ?></span>
+                        <span><?php echo $section['title']; ?></span>
                         <span class="toggle-icon"></span>
                     </button>
                     <div class="section-content">
                         <?php if (!empty($section['description'])): ?>
-                            <p><?php echo htmlspecialchars($section['description']); ?></p>
+                            <p><?php echo $section['description']; ?></p>
                         <?php endif; ?>
 
                         <?php if (!empty($section['bullets'])): ?>
                             <div class="bullet-grid">
                                 <?php foreach ($section['bullets'] as $bullet): ?>
                                     <div class="bullet-item">
-                                        <?php echo htmlspecialchars($bullet['bullet']); ?>
+                                        <?php echo $bullet['bullet']; ?>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -148,8 +154,8 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                                     <div class="floor-plan-actions">
                                         <?php foreach ($section['floor_plan']['actions'] as $action): ?>
                                             <button class="plan-action btn"
-                                                data-action="">
-                                                <?php echo htmlspecialchars($action['link']['title']); ?>
+                                                data-action="<?php echo $action['link']['url']; ?>">
+                                                <?php echo $action['link']['title']; ?>
                                             </button>
                                         <?php endforeach; ?>
                                     </div>
@@ -165,7 +171,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
     <?php if (!empty($related_properties['title']) && !empty($related_properties['items'])): ?>
         <div class="related-properties">
             <?php if (!empty($related_properties['title'])): ?>
-                <h4><?php echo htmlspecialchars($related_properties['title']); ?></h4>
+                <h4><?php echo $related_properties['title']; ?></h4>
             <?php endif; ?>
             <div class="property-carousel">
                 <div class="carousel-container">
