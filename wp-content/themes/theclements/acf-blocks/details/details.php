@@ -137,7 +137,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                             <p><?php echo $section['description']; ?></p>
                         <?php endif; ?>
 
-                        <?php if (!empty($section['bullets'])): ?>
+                        <?php if (!empty($section['bullets-OFF'])): ?>
                             <div class="bullet-grid">
                                 <?php foreach ($section['bullets'] as $bullet): ?>
                                     <div class="bullet-item">
@@ -147,7 +147,7 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                             </div>
                         <?php endif; ?>
 
-                        <?php if (!empty($section['floor_plan']['image'])): ?>
+                        <?php if (!empty($section['floor_plan-OFF']['image'])): ?>
                             <div class="floor-plan">
                                 <img src="<?php echo $section['floor_plan']['image']['url']; ?>" alt="Floor Plan" />
                                 <?php if (!empty($section['floor_plan']['actions'])): ?>
@@ -161,6 +161,41 @@ $SOCIALS_CONFIG = get_field('socials', 'option');
                                     </div>
                                 <?php endif; ?>
                             </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($section['content_block'])): ?>
+                            <?php foreach ($section['content_block'] as $block): ?>
+                                <?php if ($block['acf_fc_layout'] == 'bullets' && !empty($block['bullets'])): ?>
+                                    <div class="bullet-grid">
+                                        <?php foreach ($block['bullets'] as $bullet): ?>
+                                            <div class="bullet-item">
+                                                <?php echo $bullet['bullet']; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if ($block['acf_fc_layout'] == 'image' && !empty($block['image'])): ?>
+                                    <div class="floor-plan">
+                                        <img src="<?php echo $block['image']['url']; ?>" alt="<?php echo $block['image']['alt']; ?>" />
+                                        <?php if (!empty($block['actions'])): ?>
+                                            <div class="floor-plan-actions">
+                                                <?php foreach ($block['actions'] as $action): ?>
+                                                    <button class="plan-action btn" data-action="<?php echo $action['link']['url']; ?>">
+                                                        <?php echo $action['link']['title']; ?>
+                                                    </button>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if ($block['acf_fc_layout'] == 'wysiwyg' && !empty($block['wysiwyg'])): ?>
+                                    <div class="wysiwyg-content">
+                                        <?php echo $block['wysiwyg']; ?>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
                 </div>
