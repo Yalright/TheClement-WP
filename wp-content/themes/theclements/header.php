@@ -22,6 +22,13 @@ if (!empty($CSS_VARS_FIELDS)) {
     // print_r($CSS_VARS);
     // echo '</pre>';
 }
+
+$enable_snap_scrolling = get_field('enable_snap_scrolling', get_the_ID());
+if (!empty($enable_snap_scrolling)) {
+    $snapScrollClass = "snapScroll-enabled";
+} else {
+    $snapScrollClass = "snapScroll-disabled";
+}
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +64,7 @@ if (!empty($CSS_VARS_FIELDS)) {
 </head>
 
 <body <?php body_class(); ?>>
-    <div class="main-content">
+    <div class="main-content <?php echo $snapScrollClass; ?>">
 
         <?php
 
