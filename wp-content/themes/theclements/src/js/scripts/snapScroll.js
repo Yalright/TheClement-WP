@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
             credits: false,
             
             // Scrolling
-            scrollingSpeed: 250,
+            scrollingSpeed: 500,
             autoScrolling: true,
             fitToSection: false,
             scrollBar: true,

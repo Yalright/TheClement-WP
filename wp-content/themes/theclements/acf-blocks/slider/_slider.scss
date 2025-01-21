@@ -23,7 +23,7 @@
 
 .block-slider,
 .block-listing {
-    height: calc(100vh - var(--header-height));
+    height: calc(100dvh - var(--header-height));
     .slick-list {
         height:100%;
         .slick-track {
@@ -39,8 +39,8 @@
     touch-action: pan-y pinch-zoom;
     user-select: none;
     -webkit-user-select: none;
-    height: calc(100vh - 119px);
-    max-height: calc(100vh - 119px);
+    height: calc(100dvh - 119px);
+    max-height: calc(100dvh - 119px);
     .slick-slide {
         picture {
             img {

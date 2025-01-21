@@ -108,7 +108,7 @@ jQuery(document).ready(function($) {
             slidesToShow: 3,
             slidesToScroll: 1,
             dots: false,
-            arrows: true,
+            arrows: false,
             fade: false,
             infinite: true,
             adaptiveHeight: false,

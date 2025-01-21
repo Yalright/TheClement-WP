@@ -10,7 +10,9 @@ function adjustSlideshowHeights() {
             const footerHeight = parseInt(footerBar.offsetHeight);
             
             // Set the max height using string concatenation
-            slideshow.style.maxHeight = 'calc(100vh - ' + footerHeight + 'px - var(--header-height))';
+            // slideshow.style.maxHeight = 'calc(100dvh - ' + footerHeight + 'px - var(--header-height))';
+            // Set the height using string concatenation
+            slideshow.style.height = 'calc(100dvh - ' + footerHeight + 'px - var(--header-height))';
         }
     });
 }

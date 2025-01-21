@@ -102,38 +102,60 @@ if (!empty($enable_snap_scrolling)) {
 
             <div class="menu">
                 <div class="menu__nav">
-
                     <?php
                     $menus = get_all_header_nav_menus();
+
                     if (!empty($menus)) {
-                        foreach ($menus as $index => $menu_data) {
-                            $site_name = $menu_data['site_name'];
-                            $menu_structure = $menu_data['menu_structure'];
+                        // Get current site's menu
+                        $current_site_menu = $menus[0];
+                        $site_name = $current_site_menu['site_name'];
+                        $menu_structure = $current_site_menu['menu_structure'];
 
-                            // Set "active" class for the current site
-                            $section_class = ($index === 0) ? 'menu__section active' : 'menu__section';
+                        // Display current site's menu as accordion
+                        echo '<div class="menu__section active">';
+                        echo '<h2 class="menu__section-title" onclick="toggleMenu(this)">' . esc_html($site_name) . '</h2>';
+                        echo '<div class="menu__links-wrapper">';
+                        echo '<div class="menu__links">';
 
-                            echo '<div class="' . esc_attr($section_class) . '">';
-                            echo '<h2 class="menu__section-title" onclick="toggleMenu(this)">' . esc_html($site_name) . '</h2>';
-                            echo '<div class="menu__links-wrapper">';
-                            echo '<div class="menu__links">';
-
-                            foreach ($menu_structure as $section) {
-                                echo '<a href="' . esc_url($section['url']) . '" class="menu__link">' . esc_html($section['title']) . '</a>';
-                                if (!empty($section['children'])) {
-                                    foreach ($section['children'] as $child) {
-                                        echo '<a href="' . esc_url($child['url']) . '" class="menu__link">' . esc_html($child['title']) . '</a>';
-                                    }
+                        foreach ($menu_structure as $section) {
+                            echo '<a href="' . esc_url($section['url']) . '" class="menu__link">' . esc_html($section['title']) . '</a>';
+                            if (!empty($section['children'])) {
+                                foreach ($section['children'] as $child) {
+                                    echo '<a href="' . esc_url($child['url']) . '" class="menu__link">' . esc_html($child['title']) . '</a>';
                                 }
                             }
+                        }
 
-                            echo '</div>'; // End .menu__links
-                            echo '</div>'; // End .menu__links-wrapper
-                            echo '</div>'; // End .menu__section
+                        echo '</div>'; // End .menu__links
+                        echo '</div>'; // End .menu__links-wrapper
+                        echo '</div>'; // End .menu__section
+
+                        // Get all network sites
+                        $sites = get_sites();
+                        $current_blog_id = get_current_blog_id();
+
+                        if (count($sites) > 1) {
+
+                            foreach ($sites as $site) {
+                                // Skip current site
+                                if ($site->blog_id == $current_blog_id) {
+                                    continue;
+                                }
+
+                                // Get the first part of the domain (before .theclements-wp.local)
+                                $site_name = explode('.', $site->domain)[0];
+                                // Convert to title case and add spaces
+                                $display_name = ucwords(str_replace('-', ' ', $site_name));
+
+                                $site_url = 'https://' . $site->domain . $site->path;
+                                echo '<div class="menu__section">';
+                                echo '<h2 class="menu__section-title"><a style="font-size:calc(var(--font-size-h3) * 0.8);" href="' . esc_url($site_url) . '" class="menu__link">' . esc_html($display_name) . '</a></h2>';
+                                echo '</div>'; // End .menu__network-sites
+
+                            }
                         }
                     }
                     ?>
-
                 </div>
 
 

@@ -22,8 +22,8 @@
     user-select: none;
     -webkit-user-select: none;
     cursor: grab;
-    height:calc(100vh - 119px);
-    max-height:calc(100vh - 119px);
+    height:calc(100dvh - 119px);
+    max-height:calc(100dvh - 119px);
     .slick-list {
       height:100%;
       .slick-track {

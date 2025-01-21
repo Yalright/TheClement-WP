@@ -42,7 +42,7 @@ function site_scripts()
 	wp_enqueue_script('site-js', 
 		get_template_directory_uri() . '/assets/js/scripts.js', 
 		array('jquery', 'jquery-mousewheel', 'slick-js'), 
-		'1.0', 
+		'1.5', 
 		true
 	);
 

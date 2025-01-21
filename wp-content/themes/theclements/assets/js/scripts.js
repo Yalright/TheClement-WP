@@ -11,7 +11,9 @@ function adjustSlideshowHeights() {
             const footerHeight = parseInt(footerBar.offsetHeight);
             
             // Set the max height using string concatenation
-            slideshow.style.maxHeight = 'calc(100vh - ' + footerHeight + 'px - var(--header-height))';
+            // slideshow.style.maxHeight = 'calc(100dvh - ' + footerHeight + 'px - var(--header-height))';
+            // Set the height using string concatenation
+            slideshow.style.height = 'calc(100dvh - ' + footerHeight + 'px - var(--header-height))';
         }
     });
 }
@@ -221,7 +223,7 @@ jQuery(document).ready(function($) {
             slidesToShow: 3,
             slidesToScroll: 1,
             dots: false,
-            arrows: true,
+            arrows: false,
             fade: false,
             infinite: true,
             adaptiveHeight: false,
@@ -266,7 +268,7 @@ jQuery(document).ready(function($) {
             credits: false,
             
             // Scrolling
-            scrollingSpeed: 250,
+            scrollingSpeed: 500,
             autoScrolling: true,
             fitToSection: false,
             scrollBar: true,
